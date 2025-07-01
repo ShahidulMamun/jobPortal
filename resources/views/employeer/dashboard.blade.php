@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employer Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 240px;
+      background-color: #343a40;
+      color: white;
+      padding: 20px;
+    }
+    .sidebar a {
+      color: #ccc;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .sidebar a:hover {
+      color: #fff;
+    }
+    .main-content {
+      flex-grow: 1;
+      padding: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h4>Employer Panel</h4>
+    <hr>
+    <a href="{{ route('employeer.dashboard') }}">Dashboard</a>
+    <a href="#">Post a Job</a>
+    <a href="#">My Posted Jobs</a>
+    <a href="#">Profile</a>
+
+    <form method="POST" action="{{ route('employeer.logout') }}" class="mt-3">
+      @csrf
+      <button class="btn btn-sm btn-danger w-100" type="submit">Logout</button>
+    </form>
+  </div>
+
+  <div class="main-content">
+    <h2>Welcome, {{ Auth::guard('employeer')->user()->name }}</h2>
+    <p class="text-muted">You are logged in as an employer under: <strong>{{ Auth::guard('employeer')->user()->company_name }}</strong></p>
+
+    <div class="mt-4">
+      <a href="{{route('employeer.job.create')}}" class="btn btn-primary">Post a New Job</a>
+    </div>
+  </div>
+
+</body>
+</html>
