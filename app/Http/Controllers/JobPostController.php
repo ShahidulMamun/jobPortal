@@ -15,7 +15,7 @@ class JobPostController extends Controller
 
     public function store(Request $request)
     {
-        // ✅ Step 1: Validate input
+        // Validate input
         $request->validate([
             'job_title' => 'required|string|max:255',
             'category' => 'required|string|max:100',
@@ -28,7 +28,7 @@ class JobPostController extends Controller
             'description' => 'required|string|min:30',
         ]);
 
-        // ✅ Step 2: Prepare data
+        //  Prepare data
         $data = $request->only([
             'job_title',
             'category',
@@ -55,7 +55,7 @@ class JobPostController extends Controller
             'tags',
         ]);
 
-        // ✅ Step 3: Add extra data
+        // Add extra data
         $data['employer_id']     = auth('employeer')->id();
         $data['job_code']        = 'JOB' . strtoupper(Str::random(6));
         $data['remote_available'] = $request->has('remote_available');
@@ -65,11 +65,12 @@ class JobPostController extends Controller
         $data['is_approved']     = false;
         $data['view_count']      = 0;
 
-        // ✅ Step 4: Store to DB
+        // Store to DB
         JobPost::create($data);
 
-        // ✅ Step 5: Redirect
+        // Redirect
         return redirect()->back()->with('success', 'Job posted successfully and pending admin approval.');
+
     }
 
 

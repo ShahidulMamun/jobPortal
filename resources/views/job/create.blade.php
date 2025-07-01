@@ -7,6 +7,9 @@
       <h4>Post a New Job</h4>
     </div>
     <div class="card-body">
+
+
+
       <form method="POST" action="{{ route('employeer.job.store') }}">
         @csrf
 
@@ -162,4 +165,6 @@
     </div>
   </div>
 </div>
+
+@include('partials.toast')
 @endsection
