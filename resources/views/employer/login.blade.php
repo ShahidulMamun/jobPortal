@@ -56,7 +56,7 @@
     <div class="alert alert-danger">{{ session('error') }}</div>
   @endif
 
-  <form method="POST" action="{{ route('employeer.login') }}">
+  <form method="POST" action="{{ route('employer.login') }}">
     @csrf
 
     <div class="mb-3">
@@ -74,7 +74,7 @@
 
   <p class="text-center text-muted mt-3">
     Don't have an account?
-    <a href="{{ route('employeer.register') }}">Register</a>
+    <a href="{{ route('employer.register') }}">Register</a>
   </p>
 </div>
 

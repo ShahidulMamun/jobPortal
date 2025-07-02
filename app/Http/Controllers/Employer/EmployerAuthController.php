@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Employeer;
+namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Employeer;
+use App\Models\Employer;
 
-class EmployeerAuthController extends Controller
+class EmployerAuthController extends Controller
 {
      
     public function showRegisterForm(){
 
-        return view('employeer.register-form');
+        return view('employer.register-form');
     }
 
 
@@ -20,27 +20,26 @@ class EmployeerAuthController extends Controller
     $request->validate([
         'name' => 'required|string|max:255',
         'company_name' => 'required|string|max:255',
-        'email' => 'required|email|unique:employeers,email',
+        'email' => 'required|email|unique:employers,email',
         'password' => 'required|confirmed|min:6',
     ]);
 
-    $employer = Employeer::create([
+    $employer = Employer::create([
         'name' => $request->name,
         'company_name' => $request->company_name,
         'email' => $request->email,
         'password' => bcrypt($request->password),
     ]);
 
-    auth()->guard('employeer')->login($employer);
+    auth()->guard('employer')->login($employer);
 
-    return redirect()->route('employeer.dashboard');
+    return redirect()->route('employer.dashboard');
     }
-
 
     
      public function showLoginForm()
     {
-        return view('employeer.login');
+        return view('employer.login');
     }
 
     public function login(Request $request)
@@ -52,8 +51,8 @@ class EmployeerAuthController extends Controller
 
         $credentials = $request->only('email', 'password');
 
-        if (auth()->guard('employeer')->attempt($credentials)) {
-            return redirect()->route('employeer.dashboard');
+        if (auth()->guard('employer')->attempt($credentials)) {
+            return redirect()->route('employer.dashboard');
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials']);
@@ -61,17 +60,17 @@ class EmployeerAuthController extends Controller
 
     public function dashboard()
     {
-        return view('employeer.dashboard');
+        return view('employer.dashboard');
     }
 
 
     public function logout(Request $request)
     {
-        auth()->guard('employeer')->logout();
+        auth()->guard('employer')->logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('employeer.login');
+        return redirect()->route('employer.login');
     }
 }

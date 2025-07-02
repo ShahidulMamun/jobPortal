@@ -36,23 +36,23 @@
   <div class="sidebar">
     <h4>Employer Panel</h4>
     <hr>
-    <a href="{{ route('employeer.dashboard') }}">Dashboard</a>
+    <a href="{{ route('employer.dashboard') }}">Dashboard</a>
     <a href="#">Post a Job</a>
     <a href="#">My Posted Jobs</a>
-    <a href="#">Profile</a>
+    <a href="{{route('employer.profile.edit')}}">Profile</a>
 
-    <form method="POST" action="{{ route('employeer.logout') }}" class="mt-3">
+    <form method="POST" action="{{ route('employer.logout') }}" class="mt-3">
       @csrf
       <button class="btn btn-sm btn-danger w-100" type="submit">Logout</button>
     </form>
   </div>
 
   <div class="main-content">
-    <h2>Welcome, {{ Auth::guard('employeer')->user()->name }}</h2>
-    <p class="text-muted">You are logged in as an employer under: <strong>{{ Auth::guard('employeer')->user()->company_name }}</strong></p>
+    <h2>Welcome, {{ Auth::guard('employer')->user()->name }}</h2>
+    <p class="text-muted">You are logged in as an employer under: <strong>{{ Auth::guard('employer')->user()->company_name }}</strong></p>
 
     <div class="mt-4">
-      <a href="{{route('employeer.job.create')}}" class="btn btn-primary">Post a New Job</a>
+      <a href="{{route('employer.job.create')}}" class="btn btn-primary">Post a New Job</a>
     </div>
   </div>
 

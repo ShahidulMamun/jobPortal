@@ -24,8 +24,8 @@ class AuthController extends Controller
             auth('web')->logout();
         }
 
-        if (auth('employeer')->check()) {
-            auth('employeer')->logout();
+        if (auth('employer')->check()) {
+            auth('employer')->logout();
         }
 
 

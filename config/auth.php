@@ -46,9 +46,9 @@ return [
             'provider' => 'admins',
         ],
 
-        'employeer' => [
+        'employer' => [
             'driver' => 'session',
-            'provider' => 'employeers',
+            'provider' => 'employers',
         ],
     ],
 
@@ -80,9 +80,9 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        'employeers' => [
+        'employers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Employeer::class,
+            'model' => App\Models\Employer::class,
         ],
     ],
 

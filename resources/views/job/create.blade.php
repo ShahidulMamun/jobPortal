@@ -10,7 +10,7 @@
 
 
 
-      <form method="POST" action="{{ route('employeer.job.store') }}">
+      <form method="POST" action="{{ route('employer.job.store') }}">
         @csrf
 
         <div class="row">
