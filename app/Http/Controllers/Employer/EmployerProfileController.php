@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Employeer;
+namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class EmployeerProfileController extends Controller
+class EmployerProfileController extends Controller
 {
      public function edit()
     {
@@ -41,12 +41,15 @@ class EmployeerProfileController extends Controller
     {
         $user = auth('employer')->user();
 
+
         $request->validate([
             'current_password' => 'required',
             'new_password' => 'required|min:6|confirmed',
         ]);
 
         if (!Hash::check($request->current_password, $user->password)) {
+
+            
             return back()->withErrors(['current_password' => 'Current password is incorrect.']);
         }
 

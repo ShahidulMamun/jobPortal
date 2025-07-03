@@ -28,7 +28,7 @@ class EmployerAuthController extends Controller
         'name' => $request->name,
         'company_name' => $request->company_name,
         'email' => $request->email,
-        'password' => bcrypt($request->password),
+        'password' => $request->password,
     ]);
 
     auth()->guard('employer')->login($employer);

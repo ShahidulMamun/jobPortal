@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Facades\Hash;
 class Employer extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -41,9 +41,11 @@ class Employer extends Authenticatable
 
      public function setPasswordAttribute($value)
     {
-        if ($value && $value !== $this->password) {
-            $this->attributes['password'] = bcrypt($value);
-        }
+      
+       if ($value && !Hash::needsRehash($value)) {
+        $this->attributes['password'] = bcrypt($value);
+       }
+   
     }
 
      public function jobPosts()

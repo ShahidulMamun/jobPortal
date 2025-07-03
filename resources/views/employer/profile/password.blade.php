@@ -4,10 +4,6 @@
 <div class="container max-w-lg mx-auto mt-8">
     <h2 class="text-2xl font-bold mb-4">Change Password</h2>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <form action="{{ route('employer.password.update') }}" method="POST">
         @csrf
         @method('PUT')
@@ -32,4 +28,6 @@
         <button type="submit" class="btn btn-warning">Update Password</button>
     </form>
 </div>
+
+@include('partials.toast')
 @endsection

@@ -50,8 +50,8 @@
           <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">User Register</a></li>
 
           {{-- Employer Buttons --}}
-          <li class="nav-item"><a class="nav-link" href="{{ route('employeer.login') }}">Employer Login</a></li>
-          <li class="nav-item"><a class="nav-link" href="{{ route('employeer.register') }}">Employer Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('employer.login') }}">Employer Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ route('employer.register') }}">Employer Register</a></li>
 
           {{-- Admin (optional) --}}
           {{-- <li class="nav-item"><a class="nav-link" href="{{ route('admin.login') }}">Admin</a></li> --}}
