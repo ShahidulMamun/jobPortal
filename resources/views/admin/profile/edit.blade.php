@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +41,6 @@
         <a href="#">Jobs</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
-        <a href="{{route('admin.profile.edit')}}">Profile</a>
 
         <form action="{{ route('admin.logout') }}" method="POST" class="mt-3">
             @csrf
@@ -48,10 +49,35 @@
     </div>
 
     <div class="main">
-        <h2>Welcome, {{ Auth::guard('admin')->user()->name }}</h2>
-        <p>You are logged in as Admin.</p>
+           <div class="container mt-4">
+    <h2>Edit Profile</h2>
+
+  
+
+    <form action="{{ route('admin.profile.update') }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="name" value="{{ old('name', $admin->name) }}" class="form-control" required>
+            @error('name') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <div class="mb-3">
+            <label>Email</label>
+            <input type="email" name="email" value="{{ old('email', $admin->email) }}" class="form-control" required>
+            @error('email') <small class="text-danger">{{ $message }}</small> @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
     </div>
 
+
+@include('partials.toast');
 </body>
 </html>
+
 

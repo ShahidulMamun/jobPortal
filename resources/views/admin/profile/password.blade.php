@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,10 +49,34 @@
     </div>
 
     <div class="main">
-        <h2>Welcome, {{ Auth::guard('admin')->user()->name }}</h2>
-        <p>You are logged in as Admin.</p>
-    </div>
+         <div class="container mt-4">
+    <h2>Change Password</h2>
 
+    <form action="{{ route('admin.password.update') }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <div class="mb-3">
+            <label>Current Password</label>
+            <input type="password" name="current_password" class="form-control" required>
+            <!-- @error('current_password') <small class="text-danger">{{ $message }}</small> @enderror -->
+        </div>
+
+        <div class="mb-3">
+            <label>New Password</label>
+            <input type="password" name="new_password" class="form-control" required>
+            <!-- @error('new_password') <small class="text-danger">{{ $message }}</small> @enderror -->
+        </div>
+
+        <div class="mb-3">
+            <label>Confirm New Password</label>
+            <input type="password" name="new_password_confirmation" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-warning">Update Password</button>
+    </form>
+</div>
+    </div>
+@include('partials.toast')
 </body>
 </html>
-
