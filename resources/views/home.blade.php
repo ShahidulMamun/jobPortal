@@ -91,21 +91,63 @@
 
   {{-- Latest Jobs --}}
   <section class="py-5">
-    <div class="container">
-      <h3 class="mb-4 text-center">Latest Jobs</h3>
+       <div class="container mt-5">
+    <h2 class="mb-4 text-primary">🔍 Latest Job Opportunities</h2>
 
-      <div class="list-group">
-        @for ($i = 1; $i <= 5; $i++)
-          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-            <div>
-              <h6 class="mb-1">Frontend Developer</h6>
-              <small>Company {{ $i }} • Dhaka, Bangladesh</small>
+    @forelse($jobs as $job)
+        <div class="card mb-4 shadow-sm border-left-primary">
+            <div class="card-body d-flex align-items-center">
+                
+                {{-- Company Logo --}}
+                <div class="me-3">
+                    @if($job->employer && $job->employer->logo)
+                        <img src="{{ $job->company_logo }}" alt="Company Logo" width="60" height="60" class="rounded shadow-sm">
+                    @else
+                        <img src="{{ $job->company_logo }}" alt="Default Logo" width="60" height="60" class="rounded shadow-sm">
+                    @endif
+                </div>
+
+                {{-- Job Details --}}
+                <div class="flex-grow-1">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h5 class="mb-0 text-dark">{{ $job->job_title }}</h5>
+                        <span class="badge bg-info text-white">{{ ucfirst($job->job_type) }}</span>
+                    </div>
+
+                    <p class="mb-1 text-muted">
+                        <strong>Company:</strong> {{ $job->employer->company_name ?? 'N/A' }}
+                    </p>
+                    <p class="mb-1 text-muted">
+                        <strong>Level:</strong> {{ ucfirst($job->job_level) }} |
+                        <strong>Location:</strong> {{ $job->location ?? 'Remote' }}
+                    </p>
+                    <p class="mb-1 text-muted">
+                        <strong>Salary:</strong>
+                        @if($job->salary_hidden)
+                            Negotiable
+                        @else
+                            {{ $job->salary_range ?? 'Not Specified' }}
+                        @endif
+                    </p>
+                    <p class="mb-1 text-muted">
+                        <strong>Deadline:</strong>
+                        {{ \Carbon\Carbon::parse($job->deadline)->format('d M Y') }},
+                        {{ \Carbon\Carbon::parse($job->application_deadline_time)->format('h:i A') }}
+                    </p>
+
+                    <a href="" class="btn btn-sm btn-outline-primary mt-2">
+                        View Details
+                    </a>
+                </div>
             </div>
-            <span class="badge bg-primary rounded-pill">Full-time</span>
-          </a>
-        @endfor
-      </div>
-    </div>
+        </div>
+    @empty
+        <div class="alert alert-warning">
+            No job posts available right now. Please check back later.
+        </div>
+    @endforelse
+</div>
+
   </section>
 
   {{-- Footer --}}

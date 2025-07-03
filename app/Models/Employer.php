@@ -42,7 +42,7 @@ class Employer extends Authenticatable
      public function setPasswordAttribute($value)
     {
       
-       if ($value && !Hash::needsRehash($value)) {
+       if (!empty($value)) {
         $this->attributes['password'] = bcrypt($value);
        }
    

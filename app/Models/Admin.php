@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +15,7 @@ class Admin extends Authenticatable
 
     public function setPasswordAttribute($value)
         {
-            if ($value && !\Illuminate\Support\Facades\Hash::needsRehash($value)) {
+            if ($value && !Hash::needsRehash($value)) {
                 $this->attributes['password'] = bcrypt($value);
             }
         }

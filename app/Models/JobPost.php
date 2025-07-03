@@ -54,4 +54,25 @@ class JobPost extends Model
     {
         return $this->is_featured ? '🌟 Featured' : '';
     }
+
+
+
+    public function scopelatestJobs($query){
+
+      $now = \Carbon\Carbon::now();
+
+      return $query->where('is_approved', true)
+        ->where('status', true)
+        ->where(function ($query) use ($now) {
+            $query->where('deadline', '>', $now->toDateString())
+                  ->orWhere(function ($q) use ($now) {
+                      $q->where('deadline', '=', $now->toDateString())
+                        ->where('application_deadline_time', '>', $now->toTimeString());
+                        });
+               })->orderBy('deadline');
+
+    }
+
+
+
 }

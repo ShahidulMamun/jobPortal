@@ -26,8 +26,8 @@ return new class extends Migration
             $table->boolean('remote_available')->default(false);
             $table->string('salary_range')->nullable();
             $table->boolean('salary_hidden')->default(false);
-            $table->date('deadline')->nullable();
-            $table->time('application_deadline_time')->nullable();
+            $table->date('deadline')->nullable()->index();
+            $table->time('application_deadline_time')->index()->nullable();
             $table->text('description')->nullable();
             $table->text('responsibilities')->nullable();
             $table->text('requirements')->nullable();
