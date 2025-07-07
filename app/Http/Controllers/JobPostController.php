@@ -57,7 +57,7 @@ class JobPostController extends Controller
 
         // Add extra data
         $data['employer_id']     = auth('employer')->id();
-        $data['job_code']        = 'JOB' . strtoupper(Str::random(6));
+        // $data['job_code']        = 'JOB' . strtoupper(Str::random(6));
         $data['remote_available'] = $request->has('remote_available');
         $data['salary_hidden']   = $request->has('salary_hidden');
         $data['is_featured']     = $request->has('is_featured');

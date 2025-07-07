@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('employer_id');
             $table->string('job_code')->unique()->nullable(); // internal tracking
             $table->string('job_title');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_logo')->nullable(); // image URL/path
             $table->string('job_type'); // full-time, part-time

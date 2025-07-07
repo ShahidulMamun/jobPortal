@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class JobPost extends Model
 {
@@ -13,6 +15,7 @@ class JobPost extends Model
         'employer_id',
         'job_code',
         'job_title',
+        'slug',
         'company_name',
         'company_logo',
         'job_type',
@@ -55,8 +58,6 @@ class JobPost extends Model
         return $this->is_featured ? '🌟 Featured' : '';
     }
 
-
-
     public function scopelatestJobs($query){
 
       $now = \Carbon\Carbon::now();
@@ -72,6 +73,22 @@ class JobPost extends Model
                })->orderBy('deadline');
 
     }
+
+    //for generate slug and job code
+    protected static function booted()
+    {
+        static::created(function ($job) {
+            $job_code = 'JP-' . now()->format('Ymd') . '-' . str_pad($job->id, 4, '0', STR_PAD_LEFT);
+            $slug = Str::slug($job->job_title . '-' . $job_code);
+
+            // Update after insert
+            $job->update([
+                'job_code' => $job_code,
+                'slug' => $slug,
+            ]);
+        });
+    }
+
 
 
 
