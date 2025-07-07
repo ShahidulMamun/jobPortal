@@ -135,7 +135,7 @@
                         {{ \Carbon\Carbon::parse($job->application_deadline_time)->format('h:i A') }}
                     </p>
 
-                    <a href="{{ route('jobs.show', $job->id) }}" class="btn btn-sm btn-outline-primary">View Details</a>
+                    <a href="{{ route('jobs.show', $job->slug) }}" class="btn btn-sm btn-outline-primary">View Details</a>
 
                 </div>
             </div>

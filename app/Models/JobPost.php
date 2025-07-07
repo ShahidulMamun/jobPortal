@@ -57,7 +57,8 @@ class JobPost extends Model
     {
         return $this->is_featured ? '🌟 Featured' : '';
     }
-
+    
+    //scope method for fect job and reuseable
     public function scopelatestJobs($query){
 
       $now = \Carbon\Carbon::now();

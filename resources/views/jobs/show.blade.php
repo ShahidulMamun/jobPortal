@@ -35,7 +35,7 @@
             <hr>
 
             <a href="mailto:{{ $job->application_email }}" class="btn btn-primary">
-                Apply via Email
+                Apply via Email {{ $job->featured_badge }}
             </a>
 
             @if($job->application_link)
