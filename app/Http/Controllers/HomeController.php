@@ -14,4 +14,10 @@ class HomeController extends Controller
       return view('home', compact('jobs'));    
 
     }
+
+    public function show(JobPost $job)
+    {
+        return view('jobs.show', compact('job'));
+    }
+
 }

@@ -17,7 +17,7 @@ use App\Models\JobPost;
 */
 
  Route::get('/', [HomeController::class, 'index']);
-
+Route::get('/jobs/{job}', [HomeController::class, 'show'])->name('jobs.show');
 // Route::get('/', function () {
 //      return view('home', compact('jobs'));
 // });
