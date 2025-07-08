@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\JobPost;
+use App\Models\Category;
 use Illuminate\Support\Str;
 class JobPostController extends Controller
 {
    public function create(){
-
-    return view('jobs.create');
+    
+    $categories = Category::where('status', true)->orderBy('name')->pluck('name','id');
+    return view('jobs.create',compact('categories'));
    }
 
 

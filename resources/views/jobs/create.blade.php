@@ -21,7 +21,12 @@
 
           <div class="col-md-6 mb-3">
             <label>Job Category</label>
-            <input type="text" name="category" class="form-control" placeholder="e.g. IT, Sales">
+        <select name="category" class="form-control" required>
+            <option value="">Select Category</option>
+            @foreach($categories as $id => $name)
+                <option value="{{ $id }}">{{ $name }}</option>
+            @endforeach
+        </select>
           </div>
 
           <div class="col-md-6 mb-3">

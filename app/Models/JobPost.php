@@ -53,6 +53,12 @@ class JobPost extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+
     public function getFeaturedBadgeAttribute()
     {
         return $this->is_featured ? '🌟 Featured' : '';

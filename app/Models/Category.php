@@ -12,4 +12,11 @@ class Category extends Model
     protected $fillable = ['name', 'description','slug'];
 
 
+    public function jobs()
+    {
+      return $this->hasMany(JobPost::class, 'category_id');
+    }
+
+
+
 }
