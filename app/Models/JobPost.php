@@ -79,7 +79,7 @@ class JobPost extends Model
     protected static function booted()
     {
         static::created(function ($job) {
-            $job_code = 'JP-' . now()->format('Ymd') . '-' . str_pad($job->id, 4, '0', STR_PAD_LEFT);
+            $job_code = 'JP-' . now()->format('Ymd') . '-' . str(uniqid());
             $slug = Str::slug($job->job_title . '-' . $job_code);
 
             // Update after insert

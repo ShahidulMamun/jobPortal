@@ -39,6 +39,7 @@
         <a href="#">Jobs</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
+         <a href="{{route('admin.categories.list')}}">Add Category</a>
         <a href="{{route('admin.profile.edit')}}">Profile</a>
 
         <form action="{{ route('admin.logout') }}" method="POST" class="mt-3">
