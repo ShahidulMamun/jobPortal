@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Employer\EmployerAuthController;
 use App\Http\Controllers\Employer\EmployerProfileController;
+use App\Http\Controllers\Employer\JobController;
 use App\Http\Controllers\JobPostController;
 
 Route::prefix('employer')->name('employer.')->group(function () {
@@ -14,18 +15,32 @@ Route::prefix('employer')->name('employer.')->group(function () {
     Route::post('/login', [EmployerAuthController::class, 'login'])->name('login');
 
     Route::get('/dashboard', [EmployerAuthController::class, 'dashboard'])->middleware('auth:employer')->name('dashboard');  
-
+    
+    //create jobs and update
     Route::get('/job-post/create', [JobPostController::class, 'create'])->name('job.create')->middleware('auth:employer');
     Route::post('/job-post/store', [JobPostController::class, 'store'])->name('job.store')->middleware('auth:employer');
+   Route::get('/posted/jobs', [JobController::class, 'index'])->name('jobs.index')->middleware('auth:employer');
 
+   Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
+   Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
 
+   Route::delete('/jobs/delete/{job}/', [JobController::class, 'destroy'])->name('jobs.destroy');
+   
+   //optional route for if someone hit the direte link of delete
+   Route::get('/jobs/delete/{id}', function () {
+    return redirect()->route('employer.jobs.index')
+        ->with('error', 'Invalid request. Direct access is not allowed.');
+   });
+
+    //profile update
     Route::get('/profile', [EmployerProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:employer');
     Route::put('/profile', [EmployerProfileController::class, 'update'])->name('profile.update')->middleware('auth:employer');
     
-
+    //password update
     Route::get('/password', [EmployerProfileController::class, 'editPassword'])->name('password.edit')->middleware('auth:employer');
     Route::put('/password', [EmployerProfileController::class, 'updatePassword'])->name('password.update')->middleware('auth:employer');
 
+ 
 
     Route::post('/logout', [EmployerAuthController::class, 'logout'])->name('logout');
 

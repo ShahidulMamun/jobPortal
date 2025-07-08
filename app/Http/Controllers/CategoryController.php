@@ -65,6 +65,11 @@ class CategoryController extends Controller
     // Delete category
     public function destroy(Category $category)
     {
+        
+        if ($job->employer_id !== auth('employer')->id()) {
+            abort(403);
+        }
+        
         $category->delete();
 
         return redirect()->route('admin.categories.list')->with('success', 'Category deleted successfully.');

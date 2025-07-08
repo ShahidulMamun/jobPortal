@@ -81,6 +81,13 @@ class JobPost extends Model
 
     }
 
+    public function scopemyJobs($query){
+
+        $employerId = auth('employer')->id();
+        $query->where('employer_id', $employerId)
+                       ->orderBy('created_at', 'desc');
+    }
+
     //for generate slug and job code
     protected static function booted()
     {
