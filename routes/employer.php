@@ -21,8 +21,8 @@ Route::prefix('employer')->name('employer.')->group(function () {
     Route::post('/job-post/store', [JobPostController::class, 'store'])->name('job.store')->middleware('auth:employer');
    Route::get('/posted/jobs', [JobController::class, 'index'])->name('jobs.index')->middleware('auth:employer');
 
-   Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit');
-   Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update');
+   Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->name('jobs.edit')->middleware('auth:employer');
+   Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update')->middleware('auth:employer');
 
    Route::delete('/jobs/delete/{job}/', [JobController::class, 'destroy'])->name('jobs.destroy');
    

@@ -48,6 +48,12 @@ class JobPost extends Model
         'view_count',
     ];
 
+     protected $casts = [
+        'deadline' =>   'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     public function employer()
     {
         return $this->belongsTo(Employer::class);
@@ -92,7 +98,7 @@ class JobPost extends Model
     protected static function booted()
     {
         static::created(function ($job) {
-            $job_code = 'JP-' . now()->format('Ymd') . '-' . str(uniqid());
+            $job_code = 'JOB-' .$job->id.Str::upper(Str::random(10));
             $slug = Str::slug($job->job_title . '-' . $job_code);
 
             // Update after insert
@@ -101,7 +107,17 @@ class JobPost extends Model
                 'slug' => $slug,
             ]);
         });
+
+        static::updating(function ($job) {
+            $job_code = $job->job_code;
+            $slug = Str::slug($job->job_title . '-' . $job_code);
+            $job->slug = $slug;
+        });
+
     }
+
+
+
 
 
 
