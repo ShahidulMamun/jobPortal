@@ -29,7 +29,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
   
    //Jobs
 
-    Route::get('/pending/jobs/',[AdminJobController::class,'pendingJobsForApproval'])->name('pending.jobs');
+    Route::get('/pending/jobs/',[AdminJobController::class,'pendingJobsForApproval'])->name('pending.jobs')->middleware('auth:admin');
+    Route::patch('/job/{job}/approve/',[AdminJobController::class,'approveJob'])->name('job.approve')->middleware('auth:admin');
 
 });
 

@@ -22,4 +22,12 @@ class JobController extends Controller
                })->orderBy('deadline')->take(10)->get();
         return view('admin.jobs.index',compact('jobs'));
     }
+
+    public function approveJob(JobPost $job){
+
+            $job->is_approved = true;
+            $job->save();
+
+            return back()->with('success','Job Approve successfully');
+    }
 }

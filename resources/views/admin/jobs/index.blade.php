@@ -36,7 +36,7 @@
         <h4>Admin Panel</h4>
         <hr>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        <a href="{{route('admin.pending.jobs')}}}">Pending Jobs</a>
+        <a href="{{route('admin.pending.jobs')}}">Pending Jobs</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
          <a href="{{route('admin.categories.list')}}">Add Category</a>
@@ -55,14 +55,10 @@
 
 @section('content')
 <div class="container py-4">
-    <h2 class="mb-4">Unapproved & Valid Job Posts</h2>
-
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+    <h3 class="mb-4">Unapproved & Valid Job Posts</h3>
 
     @if($jobs->isEmpty())
-        <div class="alert alert-info">No valid unapproved jobs found.</div>
+        <div class="alert alert-info ">No valid unapproved jobs found.</div>
     @else
         <div class="table-responsive">
             <table class="table table-striped table-bordered align-middle">
@@ -96,7 +92,7 @@
                             <td>
                                 <a href="" class="btn btn-sm btn-primary">View</a>
 
-                                <form action="" method="POST" class="d-inline-block">
+                                <form action="{{route('admin.job.approve',$job->id)}}" method="POST" class="d-inline-block">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this job?')">Approve</button>
@@ -114,7 +110,7 @@
 
 
     </div>
-
+@include('partials.toast')
 </body>
 </html>
 
