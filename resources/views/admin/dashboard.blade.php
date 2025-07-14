@@ -36,7 +36,7 @@
         <h4>Admin Panel</h4>
         <hr>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        <a href="#">Jobs</a>
+        <a href="{{route('admin.pending.jobs')}}">Pending Jobs</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
          <a href="{{route('admin.categories.list')}}">Add Category</a>

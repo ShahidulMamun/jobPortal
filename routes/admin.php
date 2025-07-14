@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\CategoryController;
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -25,7 +26,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+  
+   //Jobs
 
+    Route::get('/pending/jobs/',[AdminJobController::class,'pendingJobsForApproval'])->name('pending.jobs');
 
 });
 

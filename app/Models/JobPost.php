@@ -98,7 +98,7 @@ class JobPost extends Model
     protected static function booted()
     {
         static::created(function ($job) {
-            $job_code = 'JOB-' .$job->id.Str::upper(Str::random(10));
+            $job_code = 'JOB-' .$job->id.Str::upper(Str::random(8));
             $slug = Str::slug($job->job_title . '-' . $job_code);
 
             // Update after insert
