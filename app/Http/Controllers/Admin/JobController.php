@@ -31,9 +31,20 @@ class JobController extends Controller
 
     public function approveJob(JobPost $job){
 
-            $job->is_approved = true;
-            $job->save();
+        $job->is_approved = true;
+        $job->save();
 
-            return back()->with('success','Job Approve successfully');
+        return back()->with('success','Job Approve successfully');
     }
+
+    public function reject(JobPost $job)
+    {
+        $job->update([
+            'is_approved' => false,
+            'status' => false,
+        ]);
+
+        return redirect()->route('admin.pending.jobs')->with('success', 'Job rejected successfully.');
+   }
+
 }

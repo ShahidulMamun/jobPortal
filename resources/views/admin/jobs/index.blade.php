@@ -98,6 +98,15 @@
                                     @method('PATCH')
                                     <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this job?')">Approve</button>
                                 </form>
+
+                                 <form action="{{ route('admin.job.reject', $job->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('Reject this job?')">Reject</button>
+                                </form>
+
+    
+
                             </td>
                         </tr>
                     @endforeach
