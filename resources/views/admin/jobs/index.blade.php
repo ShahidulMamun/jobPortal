@@ -90,7 +90,8 @@
 
                             <td>{{ $job->salary_range ?? 'Negotiat' }}</td>
                             <td>
-                                <a href="" class="btn btn-sm btn-primary">View</a>
+                              <a href="{{ route('admin.job.show', $job->id) }}" class="btn btn-sm btn-primary">View</a>
+
 
                                 <form action="{{route('admin.job.approve',$job->id)}}" method="POST" class="d-inline-block">
                                     @csrf

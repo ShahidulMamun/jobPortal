@@ -23,6 +23,12 @@ class JobController extends Controller
         return view('admin.jobs.index',compact('jobs'));
     }
 
+    public function show(JobPost $job)
+    {
+    return view('admin.jobs.show', compact('job'));
+    }
+
+
     public function approveJob(JobPost $job){
 
             $job->is_approved = true;

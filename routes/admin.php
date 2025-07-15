@@ -30,6 +30,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
    //Jobs
 
     Route::get('/pending/jobs/',[AdminJobController::class,'pendingJobsForApproval'])->name('pending.jobs')->middleware('auth:admin');
+    Route::get('/job/{job}', [AdminJobController::class, 'show'])->name('job.show');
     Route::patch('/job/{job}/approve/',[AdminJobController::class,'approveJob'])->name('job.approve')->middleware('auth:admin');
 
 });
