@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('company_name')->nullable();
             $table->string('company_logo')->nullable(); // image URL/path
-            $table->index('job_type'); // full-time, part-time
-            $table->index('category');
+            $table->string('job_type')->index(); // full-time, part-time
+            $table->string('category')->index();
             $table->string('job_level')->nullable(); // Entry/Mid/Senior
             $table->integer('vacancy')->nullable();
-            $table->index('location')->nullable();
+            $table->string('location')->index()->nullable();
             $table->boolean('remote_available')->default(false);
             $table->string('salary_range')->nullable();
             $table->boolean('salary_hidden')->default(false);
@@ -49,6 +49,7 @@ return new class extends Migration
             $table->string('tags')->nullable(); // SEO or filtering
             $table->unsignedInteger('view_count')->default(0); // tracking views
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

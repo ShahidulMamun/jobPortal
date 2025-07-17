@@ -47,4 +47,32 @@ class JobController extends Controller
         return redirect()->route('admin.pending.jobs')->with('success', 'Job rejected successfully.');
    }
 
+   public function destroy(JobPost $job){
+
+      $job->delete();
+      return redirect()->route('admin.pending.jobs')->with('success','Job Delete successfully');
+   }
+
+
+   public function trashedJobs(){
+
+      $trashedJobs = JobPost::onlyTrashed()->latest()->get();
+
+      return view('admin.jobs.trash',compact('trashedJobs'));
+   }
+
+    public function restore($id){
+
+      $job = JobPost::onlyTrashed()->findOrFail($id);
+      $job->restore();
+      return redirect()->route('admin.pending.jobs')->with('success','Job Restore successfully');
+    }
+
+   public function forceDelete($id){
+
+     $job = JobPost::onlyTrashed()->findOrFail($id);
+     $job->forceDelete();
+    return back()->with('success', 'Job permanently deleted.');
+   }
+
 }

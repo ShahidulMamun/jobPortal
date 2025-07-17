@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <style>
         body {
             display: flex;
@@ -38,7 +37,7 @@
         <hr>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
         <a href="{{route('admin.pending.jobs')}}">Pending Jobs</a>
-        <a href="{{route('admin.trashed.jobs')}}"><i class="fa fa-trash" aria-hidden="true"></i>Trash</a>
+        <a href="{{route('admin.trashed.jobs')}}">Trash</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
          <a href="{{route('admin.categories.list')}}">Add Category</a>
@@ -51,8 +50,35 @@
     </div>
 
     <div class="main">
-        <h2>Welcome, {{ Auth::guard('admin')->user()->name }}</h2>
-        <p>You are logged in as Admin.</p>
+          <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Job Title</th>
+            <th>Deleted At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($trashedJobs as $job)
+            <tr>
+                <td>{{ $job->job_title }}</td>
+                <td>{{ $job->deleted_at->diffForHumans() }}</td>
+                <td>
+                    <form action="{{ route('admin.job.restore', $job->id) }}" method="POST">
+                        @csrf
+                        <button class="btn btn-success btn-sm">Restore</button>
+                    </form>
+
+                    <form action="{{ route('admin.job.forceDelete', $job->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm">Permanent Delete</button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
     </div>
 
 </body>

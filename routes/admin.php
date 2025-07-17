@@ -32,7 +32,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/pending/jobs/',[AdminJobController::class,'pendingJobsForApproval'])->name('pending.jobs')->middleware('auth:admin');
     Route::get('/job/{job}', [AdminJobController::class, 'show'])->name('job.show');
     Route::patch('/job/{job}/approve/',[AdminJobController::class,'approveJob'])->name('job.approve')->middleware('auth:admin');
-    Route::patch('/job/{job}/reject', [AdminJobController::class, 'reject'])->name('job.reject');
+    Route::patch('/job/reject/{job}', [AdminJobController::class, 'reject'])->name('job.reject');
+    Route::delete('/job/{job}', [AdminJobController::class, 'destroy'])->name('job.destroy');
+    Route::get('/trashed/jobs/',[AdminJobController::class,'trashedJobs'])->name('trashed.jobs')->middleware('auth:admin');
+    Route::post('/job/restore/{job}', [AdminJobController::class, 'restore'])->name('job.restore');
+    Route::delete('/job/parmanentdelete/{id}',[AdminJobController::class,'forceDelete'])->name('job.forceDelete')->middleware('auth:admin');
+
 
 
 });

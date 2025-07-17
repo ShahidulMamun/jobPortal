@@ -37,6 +37,7 @@
         <hr>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
         <a href="{{route('admin.pending.jobs')}}">Pending Jobs</a>
+          <a href="{{route('admin.trashed.jobs')}}"><i class="fa fa-trash" aria-hidden="true"></i>Trash</a>
         <a href="#">Users</a>
         <a href="#">Settings</a>
          <a href="{{route('admin.categories.list')}}">Add Category</a>
@@ -96,13 +97,19 @@
                                 <form action="{{route('admin.job.approve',$job->id)}}" method="POST" class="d-inline-block">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this job?')">Approve</button>
+                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Do you want to approve this job?')">Approve</button>
                                 </form>
 
                                  <form action="{{ route('admin.job.reject', $job->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('PATCH')
-                                    <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('Reject this job?')">Reject</button>
+                                    <button type="submit" class="btn btn-sm btn-warning" onclick="return confirm('Do you want to reject this job?')">Reject</button>
+                                </form>
+                               
+                                <form action="{{ route('admin.job.destroy', $job->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                     @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Do you want to delete this job?')">Delete</button>
                                 </form>
 
     
