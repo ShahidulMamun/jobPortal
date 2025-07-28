@@ -80,7 +80,7 @@
     </tbody>
 </table>
     </div>
-
+@include('partials.toast')
 </body>
 </html>
 

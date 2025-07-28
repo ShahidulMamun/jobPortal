@@ -25,9 +25,27 @@ Route::prefix('employer')->name('employer.')->group(function () {
    Route::put('/jobs/{job}', [JobController::class, 'update'])->name('jobs.update')->middleware('auth:employer');
 
    Route::delete('/jobs/delete/{job}/', [JobController::class, 'destroy'])->name('jobs.destroy');
-   
-   //optional route for if someone hit the direte link of delete
+
+      //optional route for if someone hit the direte link of delete
    Route::get('/jobs/delete/{id}', function () {
+    return redirect()->route('employer.jobs.index')
+        ->with('error', 'Invalid request. Direct access is not allowed.');
+   });
+
+   Route::get('/jobs/trash',[JobController::class, 'trash'])->name('jobs.trash');
+   Route::patch('/jobs/restore/{id}',[JobController::class, 'restore'])->name('job.restore');
+   
+     //optional route for if someone hit the direte link of delete
+   Route::get('/jobs/restore/{id}', function () {
+    return redirect()->route('employer.jobs.index')
+        ->with('error', 'Invalid request. Direct access is not allowed.');
+   });
+   
+
+   Route::delete('/jobs/force-delete/{id}',[JobController::class, 'forceDelete'])->name('job.forceDelete');
+
+   //optional route for if someone hit the direte link of delete
+   Route::get('/jobs/force-delete/{id}', function () {
     return redirect()->route('employer.jobs.index')
         ->with('error', 'Invalid request. Direct access is not allowed.');
    });

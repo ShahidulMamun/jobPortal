@@ -38,7 +38,8 @@
     <hr>
     <a href="{{ route('employer.dashboard') }}">Dashboard</a>
     <a href="#">Post a Job</a>
-    <a href="{{route('employer.jobs.index')}}">My Posted Jobs</a>
+    <a href="{{route('employer.jobs.index')}}">Posted Jobs</a>
+    <a href="{{route('employer.jobs.trash')}}">Trashed Jobs</a>
     <a href="{{route('employer.profile.edit')}}">Profile</a>
 
     <form method="POST" action="{{ route('employer.logout') }}" class="mt-3">

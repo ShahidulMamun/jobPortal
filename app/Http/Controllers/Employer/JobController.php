@@ -51,7 +51,7 @@ class JobController extends Controller
     public function edit(JobPost $job)
     {
 
-       $this->authorize('update', $job); // 🔐 check permission
+      $this->authorize('update', $job); // 🔐 check permission
       $categories = Category::where('status', true)->orderBy('name')->pluck('name','id');
        return view('jobs.edit', compact('job','categories'));
     }
@@ -141,5 +141,34 @@ class JobController extends Controller
         $job->delete();
         return redirect()->route('employer.jobs.index')->with('success', 'Job delete successfully');
       
+    }
+
+    public function trash(){
+
+        $jobs = JobPost::where('employer_id',auth('employer')->id())->onlyTrashed()->latest()->paginate(5);
+        return view('employer.jobs.trash', compact('jobs'));
+    }
+
+    public function restore($id){
+       
+       
+
+      $job = JobPost::onlyTrashed()->findOrfail($id);
+      if ($job->employer_id !== auth('employer')->id()) {
+         abort(403,'Unauthorized access to this job.');
+        } 
+      $job->restore();
+      return redirect()->route('employer.jobs.trash')->with('success', 'Job Restore successfully');
+    }
+
+
+    public function forceDelete($id){
+       
+       $job = JobPost::onlyTrashed()->findOrfail($id);
+       if ($job->employer_id !== auth('employer')->id()) {
+         abort(403,'Unauthorized access to this job.');
+        } 
+       $job->forceDelete();
+       return back()->with('success','Job Deleted successfully');
     }
 }
