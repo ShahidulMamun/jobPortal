@@ -52,10 +52,49 @@
     </div>
 
     <div class="main">
-        <h2>Welcome, {{ Auth::guard('admin')->user()->name }}</h2>
-        <p>You are logged in as Admin.</p>
+         <h3>Applicants for: {{ $job->title }}</h3>
+
+       <table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>CV</th>
+            <th>Applied At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($job->applicants as $application)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $application->name }}</td>
+            <td>{{ $application->email }}</td>
+            <td>
+                @if($application->pivot->cv_path)
+                    <a href="{{ asset('storage/' . $application->pivot->cv_path) }}" target="_blank" class="btn btn-sm btn-primary">
+                        View CV
+                    </a>
+                    <a href="{{ asset('storage/' . $application->pivot->cv_path) }}" download class="btn btn-sm btn-secondary">
+                        Download
+                    </a>
+                @else
+                    <span class="text-danger">No CV</span>
+                @endif
+            </td>
+            <td>{{ $application->pivot->created_at->format('d M, Y h:i A') }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
     </div>
 
 </body>
 </html>
+
+
+
+
+
 

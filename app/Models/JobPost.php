@@ -66,6 +66,19 @@ class JobPost extends Model
     }
 
 
+    public function applications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
+    public function applicants()
+    {
+        return $this->belongsToMany(User::class, 'job_applications', 'job_id', 'user_id')
+                    ->withPivot('status', 'cv_path', 'created_at')
+                    ->withTimestamps();
+    }
+
+
     public function getFeaturedBadgeAttribute()
     {
         return $this->is_featured ? '🌟 Featured' : '';

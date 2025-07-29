@@ -112,6 +112,8 @@
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Do you want to delete this job?')">Delete</button>
                                 </form>
 
+                                 <a href="{{ route('admin.jobs.applicants', $job->id) }}" class="btn btn-sm btn-primary">View Applications</a>
+
     
 
                             </td>

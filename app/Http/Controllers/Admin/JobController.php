@@ -23,6 +23,22 @@ class JobController extends Controller
         return view('admin.jobs.index',compact('jobs'));
     }
 
+    public function activeJobs(){
+
+        $now = \Carbon\Carbon::now();
+        $jobs = JobPost::where('is_approved', true)
+        ->where('status', true)
+        ->where(function ($query) use ($now) {
+            $query->where('deadline', '>', $now->toDateString())
+                  ->orWhere(function ($q) use ($now) {
+                      $q->where('deadline', '=', $now->toDateString())
+                        ->where('application_deadline_time', '>', $now->toTimeString());
+                        });
+               })->orderBy('deadline')->take(10)->get();
+        return view('admin.jobs.index',compact('jobs'));
+
+    }
+
     public function show(JobPost $job)
     {
     return view('admin.jobs.show', compact('job'));
@@ -74,5 +90,12 @@ class JobController extends Controller
      $job->forceDelete();
     return back()->with('success', 'Job permanently deleted.');
    }
+
+
+     public function viewApplicants($jobId)
+     {
+       $job = JobPost::with('applicants')->findOrFail($jobId);
+        return view('admin.jobs.applicants', compact('job'));
+     }
 
 }

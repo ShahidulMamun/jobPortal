@@ -171,4 +171,8 @@ class JobController extends Controller
        $job->forceDelete();
        return back()->with('success','Job Deleted successfully');
     }
+
+
+   
+
 }

@@ -42,4 +42,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(JobPost::class, 'job_applications', 'user_id', 'job_id')
+                    ->withPivot('status', 'cv_path','created_at')
+                    ->withTimestamps();
+    }
+
 }
