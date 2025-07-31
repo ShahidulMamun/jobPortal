@@ -93,8 +93,8 @@ class JobController extends Controller
 
 
      public function viewApplicants($jobId)
-     {
-       $job = JobPost::with('applicants')->findOrFail($jobId);
+      {
+       $job = JobPost::with('jobApplications.user')->findOrFail($jobId);
         return view('admin.jobs.applicants', compact('job'));
      }
 

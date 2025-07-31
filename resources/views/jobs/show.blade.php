@@ -70,29 +70,22 @@
         </div>
 
         <div class="modal-body">
-          <!-- Name -->
+          
+
+           <!-- Message -->
           <div class="form-group">
-            <label for="name">Your Name</label>
-            <input type="text" name="name" class="form-control" required>
+            <label for="message">Cover Letter</label>
+            <textarea name="cover_letter" rows="4" class="form-control" placeholder="Write something..."></textarea>
           </div>
 
-          <!-- Email -->
-          <div class="form-group">
-            <label for="email">Your Email</label>
-            <input type="email" name="email" class="form-control" required>
-          </div>
-
+          
           <!-- CV Upload -->
           <div class="form-group">
             <label for="cv">Upload CV (PDF only)</label>
             <input type="file" name="cv" class="form-control-file" accept=".pdf" required>
           </div>
 
-          <!-- Message -->
-          <div class="form-group">
-            <label for="message">Cover Letter</label>
-            <textarea name="cover_letter" rows="4" class="form-control" placeholder="Write something..."></textarea>
-          </div>
+         
         </div>
 
         <div class="modal-footer">

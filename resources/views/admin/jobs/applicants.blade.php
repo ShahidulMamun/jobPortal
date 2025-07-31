@@ -60,29 +60,32 @@
             <th>#</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Cover Latter</th>
             <th>CV</th>
             <th>Applied At</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($job->applicants as $application)
+        @foreach($job->jobApplications as $application)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $application->name }}</td>
-            <td>{{ $application->email }}</td>
+            <td>{{ $application->user->name }}</td>
+            <td>{{ $application->user->email }}</td>
+            <td>{{ $application->cover_letter }}</td>
             <td>
-                @if($application->pivot->cv_path)
-                    <a href="{{ asset('storage/' . $application->pivot->cv_path) }}" target="_blank" class="btn btn-sm btn-primary">
+                @if($application->cv_path)
+                    <a href="{{ asset('storage/' . $application->cv_path) }}" target="_blank" class="btn btn-sm btn-primary">
                         View CV
                     </a>
-                    <a href="{{ asset('storage/' . $application->pivot->cv_path) }}" download class="btn btn-sm btn-secondary">
+                    <a href="{{ asset('storage/' . $application->cv_path) }}" download class="btn btn-sm btn-secondary">
                         Download
                     </a>
                 @else
                     <span class="text-danger">No CV</span>
                 @endif
             </td>
-            <td>{{ $application->pivot->created_at->format('d M, Y h:i A') }}</td>
+
+            <td>{{ $application->created_at->format('d M, Y h:i A') }}</td>
         </tr>
         @endforeach
     </tbody>

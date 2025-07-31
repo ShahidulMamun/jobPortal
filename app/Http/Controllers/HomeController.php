@@ -24,6 +24,9 @@ class HomeController extends Controller
 
     public function apply(Request $request, $jobId)
     {
+       
+        // return $request->all();
+
         $request->validate([
             'cover_letter' => 'nullable|string|max:1000',
             'cv' => 'nullable|mimes:pdf,doc,docx|max:2048',

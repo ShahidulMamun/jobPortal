@@ -43,11 +43,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function appliedJobs()
+    public function jobApplications()
     {
-        return $this->belongsToMany(JobPost::class, 'job_applications', 'user_id', 'job_id')
-                    ->withPivot('status', 'cv_path','created_at')
-                    ->withTimestamps();
+        return $this->hasMany(JobApplication::class);
     }
 
 }
