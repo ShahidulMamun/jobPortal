@@ -173,6 +173,19 @@ class JobController extends Controller
     }
 
 
+    public function jobApplication($id){
+ 
+     
+      $job = JobPost::with('jobApplications.user')->findOrfail($id);
+
+       if ($job->employer_id !== auth('employer')->id()) {
+         abort(403,'Unauthorized access to this job.');
+        }
+        
+       return view('employer.jobs.applications',compact('job'));
+    }
+
+
    
 
 }

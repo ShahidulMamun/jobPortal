@@ -50,6 +50,10 @@ Route::prefix('employer')->name('employer.')->group(function () {
         ->with('error', 'Invalid request. Direct access is not allowed.');
    });
 
+   Route::get('/jobs/applications/{id}',[JobController::class, 'jobApplication'])->name('job.applications');
+
+
+
     //profile update
     Route::get('/profile', [EmployerProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:employer');
     Route::put('/profile', [EmployerProfileController::class, 'update'])->name('profile.update')->middleware('auth:employer');

@@ -35,6 +35,8 @@
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                         {{-- Add Delete or View actions if needed --}}
+
+                         <a href="{{ route('employer.job.applications', $job->id) }}" class="btn btn-success btn-sm">Applications</a>
                     </td>
                 </tr>
             @endforeach
