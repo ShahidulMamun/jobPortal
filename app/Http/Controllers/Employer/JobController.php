@@ -151,8 +151,6 @@ class JobController extends Controller
 
     public function restore($id){
        
-       
-
       $job = JobPost::onlyTrashed()->findOrfail($id);
       if ($job->employer_id !== auth('employer')->id()) {
          abort(403,'Unauthorized access to this job.');
@@ -175,8 +173,7 @@ class JobController extends Controller
 
     public function jobApplication($id){
  
-     
-      $job = JobPost::with('jobApplications.user')->findOrfail($id);
+       $job = JobPost::with('jobApplications.user')->findOrfail($id);
 
        if ($job->employer_id !== auth('employer')->id()) {
          abort(403,'Unauthorized access to this job.');

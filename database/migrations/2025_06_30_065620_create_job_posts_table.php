@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->string('company_logo')->nullable(); // image URL/path
             $table->string('job_type')->index(); // full-time, part-time
-            $table->string('category')->index();
+            $table->string('category_id')->index();
             $table->string('job_level')->nullable(); // Entry/Mid/Senior
             $table->integer('vacancy')->nullable();
             $table->string('location')->index()->nullable();

@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\JobPost;
 use App\Models\JobApplication;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
     
     public function index(){
-
+      
+      $categories = Category::where('status',1)->withCount('jobs')->get();
       $jobs = JobPost::latestJobs()->take(5)->get();
-      return view('home', compact('jobs'));    
+      return view('index', compact(['jobs','categories']));    
 
     }
 
