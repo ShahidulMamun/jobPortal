@@ -17,10 +17,12 @@ class JobPostController extends Controller
 
     public function store(Request $request)
     {
+
+        // return $request->all();
         // Validate input
         $request->validate([
             'job_title' => 'required|string|max:255',
-            'category' => 'required|string|max:100',
+            'category_id' => 'required|string|max:100',
             'job_type' => 'required|string',
             'salary_range' => 'nullable|string|max:100',
             'deadline' => 'nullable|date',
@@ -33,7 +35,7 @@ class JobPostController extends Controller
         //  Prepare data
         $data = $request->only([
             'job_title',
-            'category',
+            'category_id',
             'job_type',
             'job_level',
             'vacancy',

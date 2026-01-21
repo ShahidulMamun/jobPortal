@@ -31,30 +31,18 @@
                                  <li class="nav-item">
                                     <a href="about.html" class="nav-link">Candidate</a>
                                 </li>
-                       
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link dropdown-toggle">Blogs <i class="icofont-simple-down"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a href="blog.html" class="nav-link">Blog</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="blog-details.html" class="nav-link">Blog Details</a>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="nav-item">
                                     <a href="contact.html" class="nav-link">Contact</a>
                                 </li>
                             </ul>
                             <div class="common-btn">
-                                <a class="login-btn" style="padding: 6px;font-size: 13px" href="login.html">
+                                <a class="login-btn" style="padding: 6px;font-size: 13px" href="{{route('login')}}">
                                     <i class="icofont-plus-square"></i>
                                     Login
                                 </a>
-                                <a class="sign-up-btn" style="padding: 6px;font-size: 13px" href="create-account.html">
+                                <a class="sign-up-btn" style="padding: 6px;font-size: 13px" href="{{route('register')}}">
                                     <i class="icofont-user-alt-4"></i>
-                                    Sign Up
+                                    Register
                                 </a>
                             </div>
                         </div>

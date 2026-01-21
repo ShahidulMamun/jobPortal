@@ -20,7 +20,7 @@ class JobPost extends Model
         'company_name',
         'company_logo',
         'job_type',
-        'category',
+        'category_id',
         'job_level',
         'vacancy',
         'location',

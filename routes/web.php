@@ -15,6 +15,7 @@ use App\Models\JobPost;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Route::get('/user/register', [HomeController::class, 'registerPage'])->name('register.page');
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/jobs/{job:slug}', [HomeController::class, 'show'])->name('jobs.show');

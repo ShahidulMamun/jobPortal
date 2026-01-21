@@ -1,6 +1,6 @@
    <!-- Footer -->
         <footer>
-            <div class="container">
+            <div class="container" style="margin-top: 120px;">
 
                 <!-- Subscribe Form -->
                 <div class="subscribe-area">

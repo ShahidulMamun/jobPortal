@@ -10,8 +10,8 @@ class JobController extends Controller
 {
     public function pendingJobsForApproval(){
      
-        $now = \Carbon\Carbon::now();
-        $jobs = JobPost::where('is_approved', false)
+         $now = \Carbon\Carbon::now();
+         $jobs = JobPost::where('is_approved', false)
         ->where('status', true)
         ->where(function ($query) use ($now) {
             $query->where('deadline', '>', $now->toDateString())

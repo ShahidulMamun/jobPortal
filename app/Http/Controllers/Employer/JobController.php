@@ -68,7 +68,7 @@ class JobController extends Controller
      // Validate request
      $request->validate([
         'job_title' => 'required|string|max:255',
-        'category' => 'required|exists:categories,id',
+        'category_id' => 'required|exists:categories,id',
         'job_type' => 'required|string',
         'job_level' => 'required|string',
         'vacancy' => 'nullable|integer',
@@ -99,7 +99,7 @@ class JobController extends Controller
      // Update job
      $job->update([
         'job_title' => $request->job_title,
-        'category' => $request->category,
+        'category_id' => $request->category,
         'job_type' => $request->job_type,
         'job_level' => $request->job_level,
         'vacancy' => $request->vacancy,

@@ -32,15 +32,20 @@ class EmployerAuthController extends Controller
         'password' => $request->password,
     ]);
 
-    auth()->guard('employer')->login($employer);
+       auth()->guard('employer')->login($employer);
 
-    return redirect()->route('employer.dashboard');
+         return response()->json([
+            'redirect' => route('employer.dashboard'),
+            'message' => 'You registered successfully as a Employer'
+        ]);
+
+  
     }
 
     
      public function showLoginForm()
     {
-        return view('employer.login');
+        return view('login');
     }
 
     public function login(Request $request)
@@ -72,6 +77,6 @@ class EmployerAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('employer.login');
+        return redirect()->route('login');
     }
 }

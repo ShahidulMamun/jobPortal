@@ -10,6 +10,10 @@ use App\Models\Category;
 class HomeController extends Controller
 {
     
+    public function registerPage(){
+
+        return view('auth.register-page');
+    }
     public function index(){
       
       $categories = Category::where('status',1)->withCount('jobs')->get();

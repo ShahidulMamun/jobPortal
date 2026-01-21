@@ -36,6 +36,7 @@
         <h4>Admin Panel</h4>
         <hr>
         <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+        <a href="{{route('admin.active.jobs')}}">Active Jobs</a>
         <a href="{{route('admin.pending.jobs')}}">Pending Jobs</a>
           <a href="{{route('admin.trashed.jobs')}}"><i class="fa fa-trash" aria-hidden="true"></i>Trash</a>
         <a href="#">Users</a>

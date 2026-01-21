@@ -74,7 +74,7 @@
 
   <p class="text-center text-muted mt-3">
     Don't have an account?
-    <a href="{{ route('employer.register') }}">Register</a>
+    <a href="{{ route('register') }}">Register</a>
   </p>
 </div>
 

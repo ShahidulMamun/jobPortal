@@ -56,6 +56,36 @@
       <a href="{{route('employer.job.create')}}" class="btn btn-primary">Post a New Job</a>
     </div>
   </div>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let msg = sessionStorage.getItem('success_message');
+
+    if (msg) {
+        Toast.fire({
+            icon: 'success',
+            title: msg
+        });
+
+        sessionStorage.removeItem('success_message');
+    }
+});
+</script>
+
+
 
 </body>
+
+
 </html>
