@@ -1,0 +1,149 @@
+:root {
+    --primary: #44BF53;
+    --dark: #2f3e46;
+    --light: #f6f9fc;
+}
+
+
+
+/* User Type Selection */
+.user-type-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: #fff;
+    width: 260px;
+    padding: 30px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 80px;
+}
+
+.card h3 {
+    margin-top: 15px;
+    font-size: 22px;
+    color: var(--dark);
+}
+
+.card p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 420px;
+    padding: 25px;
+    border-radius: 14px;
+    animation: scaleUp 0.3s ease;
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 12px;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #38a947;
+}
+
+.close {
+    text-align: right;
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card h3 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 15px;
+    }
+}

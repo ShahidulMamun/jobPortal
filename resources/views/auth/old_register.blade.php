@@ -1,40 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Livejobsbd - Find Your Dream Job</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-@vite('resources/css/style.css')
-@vite('resources/css/login.css')
+@extends('layouts.app')
+@section('content')
+
+
+<style>
+:root {
+    --primary: #44BF53;
+    --dark: #2f3e46;
+    --light: #f6f9fc;
+}
+
+
+
+/* User Type Selection */
+.user-type-container {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background: #fff;
+    width: 260px;
+    padding: 30px;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 80px;
+}
+
+.card h3 {
+    margin-top: 15px;
+    font-size: 22px;
+    color: var(--dark);
+}
+
+.card p {
+    font-size: 14px;
+    color: #666;
+    margin-top: 8px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-content {
+    background: #fff;
+    width: 100%;
+    max-width: 420px;
+    padding: 25px;
+    border-radius: 14px;
+    animation: scaleUp 0.3s ease;
+}
+
+@keyframes scaleUp {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 12px;
+}
+
+label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+input:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #38a947;
+}
+
+.close {
+    text-align: right;
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card h3 {
+        font-size: 20px;
+    }
+
+    button {
+        font-size: 15px;
+    }
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
-<body>
-
-<!-- Header -->
-<header>
-<div class="container">
-<nav>
-<div class="logo"><i class="fas fa-briefcase"></i> LivejobsBD</div>
-<ul class="nav-links" id="navLinks">
-<li><a href="#home">Home</a></li>
-<li><a href="#jobs">Find Jobs</a></li>
-<li><a href="#companies">Companies</a></li>
-<li><a href="#candidates">Candidates</a></li>
-<li><a href="#about">About</a></li>
-<li><a href="#contact">Contact</a></li>
-<li><a href="{{route('login')}}" class="btn btn-outline">Login</a></li>
-<li><a href="{{route('register')}}" class="btn btn-primary">Post a Job</a></li>
-</ul>
-<div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-</nav>
-</div>
-</header>
 
 
-
-
-<!-- Register section -->
-<section class="search-job pt-100 " style="margin-top: 100px;">
+ <section class="search-job pt-100 " >
            <div class="container mt-5">
            
 
@@ -126,42 +250,9 @@
         </div>
  </div>
 </section>
-
-
-
-
-
-<!-- CTA Section -->
-<section class="cta">
-<div class="container">
-<h2>Ready to Take the Next Step?</h2>
-<p>Join thousands of professionals finding their dream jobs</p>
-<div class="cta-buttons">
-<a href="#" class="btn btn-white">Create Free Account</a>
-<a href="#" class="btn btn-outline" style="color:white; border-color:white;">Upload Your CV</a>
-</div>
-</div>
-</section>
-
-<!-- Footer -->
-<footer>
-<div class="container">
-<div class="footer-content">
-<div class="footer-section"><h3><i class="fas fa-briefcase"></i> JobPortal</h3>
-<p>Your trusted partner in finding the perfect career opportunity. Connect with top employers and discover your dream job.</p>
-<div class="social-links"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
-</div>
-<div class="footer-section"><h3>For Candidates</h3><ul><li><a href="#">Browse Jobs</a></li><li><a href="#">Browse Categories</a></li><li><a href="#">Candidate Dashboard</a></li><li><a href="#">Job Alerts</a></li><li><a href="#">My Bookmarks</a></li></ul></div>
-<div class="footer-section"><h3>For Employers</h3><ul><li><a href="#">Post a Job</a></li><li><a href="#">Browse Candidates</a></li><li><a href="#">Employer Dashboard</a></li><li><a href="#">Applications</a></li><li><a href="#">Pricing Plans</a></li></ul></div>
-<div class="footer-section"><h3>Quick Links</h3><ul><li><a href="#">About Us</a></li><li><a href="#">Contact Us</a></li><li><a href="#">Career Advice</a></li><li><a href="#">FAQs</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
-</div>
-<div class="footer-bottom"><p>&copy; 2026 JobPortal. All rights reserved. Designed with <i class="fas fa-heart" style="color:#e74c3c;"></i> for job seekers worldwide.</p></div>
-</div>
-</footer>
-
 @include('partials.toast')
 
-!-- scripts for modal open -->
+<!-- scripts for modal open -->
 <script>
 function openModal(type) {
     document.getElementById('registerModal').style.display = 'flex';
@@ -225,5 +316,8 @@ registerForm.addEventListener('submit', function (e) {
     .catch(() => {});
 });
 </script>
-</body>
-</html>
+
+
+
+@endsection
+     
