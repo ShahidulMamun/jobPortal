@@ -565,6 +565,7 @@
             .profile-edit-btn { margin: 0 auto; }
         }
     </style>
+     @stack('styles')
 </head>
 <body>
 
@@ -1041,6 +1042,12 @@
             </div>
         </div>
 
+
+         <!-- ─── Job Post ─── -->
+        @include('employer.jobs.create')
+
+        @include('employer.jobs.index')
+
     </div>
 </div>
 
@@ -1054,7 +1061,9 @@
         profile:      'My Profile',
         resume:       'Resume / CV',
         alerts:       'Job Alerts',
-        settings:     'Settings'
+        settings:     'Settings',
+        postjob:      'Post Job',
+        postedjob:    'Posted Job'
     };
 
     // ── Show tab ──
