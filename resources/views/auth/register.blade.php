@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livejobsbd - Find Your Dream Job</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-@vite('resources/css/style.css')
-@vite('resources/css/login.css')
+@vite('resources/css/app.css')
 </head>
 <body>
 
@@ -137,7 +136,7 @@
 <h2>Ready to Take the Next Step?</h2>
 <p>Join thousands of professionals finding their dream jobs</p>
 <div class="cta-buttons">
-<a href="#" class="btn btn-white">Create Free Account</a>
+<a href="{{route('register')}}" class="btn btn-white">Create Free Account</a>
 <a href="#" class="btn btn-outline" style="color:white; border-color:white;">Upload Your CV</a>
 </div>
 </div>
@@ -147,7 +146,7 @@
 <footer>
 <div class="container">
 <div class="footer-content">
-<div class="footer-section"><h3><i class="fas fa-briefcase"></i> JobPortal</h3>
+<div class="footer-section"><h3><i class="fas fa-briefcase"></i>JobPortal</h3>
 <p>Your trusted partner in finding the perfect career opportunity. Connect with top employers and discover your dream job.</p>
 <div class="social-links"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a><a href="#"><i class="fab fa-instagram"></i></a></div>
 </div>
@@ -161,7 +160,7 @@
 
 @include('partials.toast')
 
-!-- scripts for modal open -->
+<!-- scripts for modal open -->
 <script>
 function openModal(type) {
     document.getElementById('registerModal').style.display = 'flex';

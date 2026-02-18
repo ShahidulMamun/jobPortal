@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livejobsbd - Find Your Dream Job</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-@vite('resources/css/style.css')
-@vite('resources/css/login.css')
+@vite('resources/css/app.css')
 </head>
 <body>
 
@@ -108,7 +107,7 @@
 <h2>Ready to Take the Next Step?</h2>
 <p>Join thousands of professionals finding their dream jobs</p>
 <div class="cta-buttons">
-<a href="#" class="btn btn-white">Create Free Account</a>
+<a href="{{route('register')}}" class="btn btn-white">Create Free Account</a>
 <a href="#" class="btn btn-outline" style="color:white; border-color:white;">Upload Your CV</a>
 </div>
 </div>

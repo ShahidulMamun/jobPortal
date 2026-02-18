@@ -17,7 +17,8 @@ class EmployerAuthController extends Controller
 
     public function register(Request $request)
     {
-
+      
+    //  return dd($request->all());
     $request->validate([
         'name' => 'required|string|max:255',
         'company_name' => 'required|string|max:255',
