@@ -14,6 +14,11 @@
             <span class="badge">5</span>
         </a>
 
+         <a class="nav-item" onclick="showTab('postedjob', this)">
+            <i class="fa fa-briefcase"></i> Posted Job
+            <span class="badge">5</span>
+        </a>
+
         <a class="nav-item" onclick="showTab('applications', this)">
             <i class="fas fa-file-alt"></i> My Applications
             <span class="badge">5</span>
