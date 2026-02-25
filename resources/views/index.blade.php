@@ -112,27 +112,24 @@
 <div class="container">
 <div class="section-header"><h2>Latest Jobs</h2><p>Explore the newest job opportunities posted today</p></div>
 <div class="jobs-grid">
+@foreach ($jobs as $job)
 <div class="job-card">
 <div class="job-header"><div class="company-logo"><i class="fas fa-code"></i></div>
-<div class="job-info"><h3>Senior Frontend Developer</h3><p class="company-name">TechCorp Solutions</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i> New York, USA</span><span class="meta-item"><i class="fas fa-clock"></i> Full Time</span></div>
-<div class="job-tags"><span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">CSS</span></div>
-<div class="job-footer"><span class="salary">$80k - $120k</span><a href="#" class="btn btn-outline">Apply Now</a></div>
+<div class="job-info"><h3>{{$job->job_title}}</h3><p class="company-name">{{$job->company_name}}</p></div></div>
+<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i>{{$job->location}}</span><span class="meta-item"><i class="fas fa-clock"></i>{{ucwords(str_replace("-", " ", $job->job_type))}}</span></div>
+<div class="job-tags">
+   @php $tags = explode(",", $job->tags); @endphp
+    @foreach ($tags as $tag)
+     <span class='tag'> {{ trim($tag) }} </span>
+    @endforeach
+  {{-- <span class="tag">{{$job->tags}} --}}
+
+  </div>
+<div class="job-footer"><span class="salary">{{$job->salary_range}}</span><a href="{{route('jobs.show',$job->slug)}}" class="btn btn-outline">Apply Now</a></div>
 </div>
-<div class="job-card">
-<div class="job-header"><div class="company-logo"><i class="fas fa-paint-brush"></i></div>
-<div class="job-info"><h3>UI/UX Designer</h3><p class="company-name">Creative Studios</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i> London, UK</span><span class="meta-item"><i class="fas fa-clock"></i> Remote</span></div>
-<div class="job-tags"><span class="tag">Figma</span><span class="tag">Adobe XD</span></div>
-<div class="job-footer"><span class="salary">$60k - $90k</span><a href="#" class="btn btn-outline">Apply Now</a></div>
-</div>
-<div class="job-card">
-<div class="job-header"><div class="company-logo"><i class="fas fa-chart-line"></i></div>
-<div class="job-info"><h3>Marketing Manager</h3><p class="company-name">Global Marketing Inc</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i> San Francisco</span><span class="meta-item"><i class="fas fa-clock"></i> Full Time</span></div>
-<div class="job-tags"><span class="tag">SEO</span><span class="tag">Content</span></div>
-<div class="job-footer"><span class="salary">$70k - $100k</span><a href="#" class="btn btn-outline">Apply Now</a></div>
-</div>
+@endforeach
+
+
 </div>
 <div style="text-align:center; margin-top:3rem;"><a href="#" class="btn btn-primary">View All Jobs</a></div>
 </div>
