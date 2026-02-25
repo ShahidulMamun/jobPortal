@@ -19,7 +19,6 @@ class HomeController extends Controller
       $categories = Category::where('status',1)->withCount('jobs')->get();
       $jobs = JobPost::latestJobs()->take(5)->get();
       return view('index', compact(['jobs','categories']));    
-
     }
 
     public function show(JobPost $job)
