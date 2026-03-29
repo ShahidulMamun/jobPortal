@@ -623,7 +623,7 @@
 
           <div class="salary-highlight">
             <i class="fas fa-money-bill-wave"></i>
-            BDT 50,000 – 70,000 / Month
+            BDT {{$job->salary_range}}
           </div>
         </div>
 
@@ -642,8 +642,7 @@
         <!-- Job Description -->
         <div class="card">
           <h2><span class="icon-circle"><i class="fas fa-file-alt"></i></span> Job Description</h2>
-          <p>SpaceSoftBD is looking for a passionate and talented <strong>Software Engineer</strong> to join our growing development team. As a Software Engineer, you will be responsible for designing, developing, testing, and maintaining high-quality software solutions that help our clients achieve their business goals.</p>
-          <p>
+           <p>
             {{$job->description}}
           </p>
         </div>
