@@ -83,10 +83,8 @@ class EmployerProfileController extends Controller
             if (Auth::guard('employer')->user()->photo && \Storage::disk('public')->exists(Auth::guard('employer')->user()->photo)) {
                 \Storage::disk('public')->delete(Auth::guard('employer')->user()->photo);
             }
-
-
             // Store in storage/app/public/photos
-             $path = $request->file('photo')->store('photos', 'public');
+             $path = $request->file('photo')->store('employer-photos', 'public');
 
             // If saving to DB:
               $employer = Auth::guard('employer')->user();
