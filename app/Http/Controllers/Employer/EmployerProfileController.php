@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Employer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Auth;
 
 class EmployerProfileController extends Controller
 {
@@ -19,14 +21,25 @@ class EmployerProfileController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'email',
+                 Rule::unique('employers')
+                 ->whereNull('deleted_at')
+                 ->ignore(Auth::guard('employer')->user()->id)
+            ],
             'company_name' => 'required|string|max:255',
             'phone' => 'nullable|string|max:20',
-        ]);
+          ]);
 
         $user->update([
-            'name' => $request->name,
+            'name'         => $request->name,
             'company_name' => $request->company_name,
-            'phone' => $request->phone,
+            'phone'        => $request->phone,
+            'designation'  =>$request->designation,
+            'company_address'=>$request->company_address,
+            'company_website'=>$request->company_website,
+            'company_description'=>$request->company_description,
         ]);
 
         return back()->with('success', 'Profile updated successfully.');
