@@ -60,7 +60,8 @@ Route::prefix('employer')->name('employer.')->group(function () {
     //password update
     Route::put('/password', [EmployerProfileController::class, 'updatePassword'])->name('password.update')->middleware('auth:employer');
 
- 
+   //upload photo
+   Route::post('/upload-photo',[EmployerProfileController::class,'employerPhotoUpload'])->name('photo.upload')->middleware('auth:employer');
 
     Route::post('/logout', [EmployerAuthController::class, 'logout'])->name('logout');
 
