@@ -908,24 +908,28 @@
                     <div class="card">
                     <div class="card-header"><h3>Update Password</h3></div>
                     <div class="card-body">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Old</label>
-                                <input name="name" class="form-control" value="{{Auth::guard('employer')->user()->name}}">
-                            </div>
-                            <div class="form-group">
-                                <label>New Password</label>
-                                <input class="form-control" name="email" value="{{Auth::guard('employer')->user()->email}}">
-                            </div>
+                         <form action="{{ route('employer.password.update') }}" method="POST">
+                               @csrf
+                               @method('PUT')
+                             <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Old</label>
+                                    <input type="password" name="current_password" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>New Password</label>
+                                    <input type="password" name="new_password" class="form-control" name="email" value="">
+                                </div>
 
-                             <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input class="form-control" name="email" value="{{Auth::guard('employer')->user()->email}}">
-                            </div>
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="new_password_confirmation" class="form-control" name="email" value="">
+                                </div>
                             
-                        
-                        </div>
-                        <button class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+                             </div>
+                                <button class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+                         </form>
+                     
                     </div>
                 </div>
 
