@@ -55,7 +55,6 @@ Route::prefix('employer')->name('employer.')->group(function () {
 
 
     //profile update
-    Route::get('/profile', [EmployerProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:employer');
     Route::put('/profile', [EmployerProfileController::class, 'update'])->name('profile.update')->middleware('auth:employer');
     
     //password update

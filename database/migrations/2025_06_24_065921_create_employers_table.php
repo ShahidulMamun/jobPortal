@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('status')->default(true); // Active/Inactive
             $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

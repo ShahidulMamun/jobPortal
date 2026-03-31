@@ -866,6 +866,9 @@
                 <div class="card">
                     <div class="card-header"><h3>Personal Information</h3></div>
                     <div class="card-body">
+                     <form action="{{ route('employer.profile.update') }}" method="POST">
+                    @csrf
+                    @method('PUT')
                         <div class="form-grid">
                             <div class="form-group">
                                 <label>Name</label>
@@ -877,11 +880,16 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input class="form-control" name="phone" value="{{Auth::guard('employer')->user()->phonee}}">
+                                <input class="form-control" name="phone" value="{{Auth::guard('employer')->user()->phone}}">
                             </div>
 
                              <div class="form-group">
-                                <label>Phone</label>
+                                <label>Designation</label>
+                                <input class="form-control" name="designation" value="{{Auth::guard('employer')->user()->designation}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company</label>
                                 <input class="form-control" name="company_name" value="{{Auth::guard('employer')->user()->company_name}}">
                             </div>
 
@@ -893,14 +901,15 @@
                             
                             <div class="form-group">
                                 <label>Website</label>
-                                <input class="form-control" name="company_website" value="{{Auth::guard('employer')->user()->company_website}}">
+                                <input type="url" class="form-control" name="company_website" value="{{Auth::guard('employer')->user()->company_website}}">
                             </div>
                             <div class="form-group full">
                                 <label>Company Bio {{-- company details --}} </label>
-                                <textarea class="form-control" rows="3">{{Auth::guard('employer')->user()->company_description}} </textarea>
+                                <textarea class="form-control" name="company_description" rows="3">{{Auth::guard('employer')->user()->company_description}} </textarea>
                             </div>
                         </div>
                         <button class="save-btn"><i class="fas fa-save"></i> Save Changes</button>
+                    </form>
                     </div>
                 </div>
                 {{-- password card --}}
