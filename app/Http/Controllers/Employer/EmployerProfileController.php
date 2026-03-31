@@ -71,4 +71,28 @@ class EmployerProfileController extends Controller
 
         return back()->with('success', 'Password updated successfully.');
     }
+
+    public function employerPhotoUpload(Request $request){
+       
+        // return $request->all();
+        $request->validate(['photo'=>'required|image|mimes:jpeg,png,jpg|max:2048']);
+
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+
+            // Delete old photo if exists
+            if (Auth::guard('employer')->user()->photo && \Storage::disk('public')->exists(Auth::guard('employer')->user()->photo)) {
+                \Storage::disk('public')->delete(Auth::guard('employer')->user()->photo);
+            }
+            // Store in storage/app/public/photos
+             $path = $request->file('photo')->store('employer-photos', 'public');
+
+            // If saving to DB:
+              $employer = Auth::guard('employer')->user();
+              $employer->photo = $path;
+              $employer->save();
+
+            return back()->with('success', 'Photo uploaded!')->with('path', $path);
+        }
+
+    }
 }

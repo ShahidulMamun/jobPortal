@@ -60,7 +60,7 @@
 
     <div class="sidebar-footer">
         <div class="user-info">
-            <div class="user-avatar">JS</div>
+            <div class="user-avatar"><img style="height:40px;width: 40px;border-radius: 32px;" src="{{ asset('storage/' . Auth::guard('employer')->user()->photo) }}"></div>
             <div>
                 <div class="user-name">{{Auth::guard('employer')->user()->name}}</div>
                 <div class="user-role">{{Auth::guard('employer')->user()->designation}}</div>

@@ -564,6 +564,40 @@
             .profile-header { flex-direction: column; text-align: center; }
             .profile-edit-btn { margin: 0 auto; }
         }
+
+        /* style for photo upload card desing  */
+   
+        .upload-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; max-width: 420px; margin: 1rem auto; }
+        .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+        .card-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0; }
+        .badge { font-size: 11px; padding: 3px 10px; border-radius: 99px; background: var(--color-background-success); color: var(--color-text-success); font-weight: 500; }
+        .drop-zone { border: 1.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: background 0.2s, border-color 0.2s; position: relative; }
+        .drop-zone:hover, .drop-zone.dragging { background: var(--color-background-secondary); border-color: var(--color-border-primary); }
+        .drop-icon { width: 40px; height: 40px; margin: 0 auto 0.75rem; border-radius: 50%; background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; }
+        .drop-icon svg { width: 20px; height: 20px; stroke: var(--color-text-secondary); fill: none; stroke-width: 1.5; }
+        .drop-label { font-size: 14px; color: var(--color-text-primary); font-weight: 500; margin-bottom: 4px; }
+        .drop-sub { font-size: 12px; color: var(--color-text-secondary); }
+        .browse-link { color: var(--color-text-info); text-decoration: underline; cursor: pointer; }
+        .hidden-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+        .preview-area { display: none; margin-top: 1rem; align-items: center; gap: 12px; padding: 0.75rem; background: var(--color-background-secondary); border-radius: var(--border-radius-md); }
+        .preview-thumb { width: 52px; height: 52px; border-radius: var(--border-radius-md); object-fit: cover; border: 0.5px solid var(--color-border-tertiary); flex-shrink: 0; }
+        .preview-info { flex: 1; min-width: 0; }
+        .preview-name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .preview-size { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+        .remove-btn { width: 28px; height: 28px; border-radius: 50%; border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .remove-btn svg { width: 14px; height: 14px; stroke: var(--color-text-secondary); fill: none; stroke-width: 2; }
+        .progress-bar { height: 3px; background: var(--color-border-tertiary); border-radius: 99px; margin-top: 0.75rem; overflow: hidden; display: none; }
+        .progress-fill { height: 100%; width: 0; background: var(--color-text-info); border-radius: 99px; transition: width 0.3s ease; }
+        .footer { margin-top: 1.25rem; display: flex; gap: 8px; }
+        .btn-cancel { flex: 1; padding: 8px; font-size: 13px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+        .btn-upload { flex: 2; padding: 8px; font-size: 13px; font-weight: 500; border-radius: var(--border-radius-md); border: none; background: var(--color-text-primary); color: var(--color-background-primary); cursor: pointer; opacity: 0.4; transition: opacity 0.2s; }
+        .btn-upload.active { opacity: 1; }
+        .requirements { margin-top: 1rem; }
+        .req-row { display: flex; gap: 12px; }
+        .req-item { flex: 1; font-size: 11px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px; }
+        .req-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--color-border-secondary); flex-shrink: 0; }
+
+        /* style for photo upload card design  */
     </style>
      @stack('styles')
 </head>
@@ -853,7 +887,7 @@
         <!-- ─── PROFILE ─── -->
         <div class="tab-panel" id="tab-profile">
             <div class="profile-header">
-                <div class="profile-big-avatar">JS</div>
+                <div class="profile-big-avatar"><img style="height:90px;width: 90px;border-radius: 50px;" src="{{ asset('storage/' . Auth::guard('employer')->user()->photo) }}"></div>
                 <div class="profile-meta">
                     <h2>{{auth::guard('employer')->user()->name}}</h2>
                     <p>Senior Web Developer</p>
@@ -944,28 +978,46 @@
 
 
                 <div class="card">
-                    <div class="card-header"><h3>Profile Completion</h3></div>
+                    <div class="card-header"><h3>Profile Photo</h3></div>
                     <div class="card-body">
-                        <div class="progress-item">
-                            <h4><span>Basic Info</span><span>100%</span></h4>
-                            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+                        <!-- Photo Upload Card -->
+                        <form action="{{route('employer.photo.upload')}}" method="post" enctype="multipart/form-data">
+                          @csrf
+                            <div class="upload-card">
+                            <div class="drop-zone" id="dropZone">
+                                <input type="file" name="photo" class="hidden-input" id="fileInput" accept="image/*" />
+                                <div class="drop-icon">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                </div>
+                                <p class="drop-label">Drop photo here or <span class="browse-link">browse</span></p>
+                                <p class="drop-sub">JPG, PNG or WEBP — max 5MB</p>
+                            </div>
+
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+
+                            <div class="preview-area" id="previewArea">
+                                <img class="preview-thumb" id="previewThumb" src="" alt="preview" />
+                                <div class="preview-info">
+                                <p class="preview-name" id="previewName">photo.jpg</p>
+                                <p class="preview-size" id="previewSize">2.4 MB</p>
+                                </div>
+                                <button class="remove-btn" id="removeBtn">
+                                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                                </button>
+                            </div>
+
+                        
+
+                            <div class="footer">
+                               
+                                <button class="btn btn-success btn-upload" id="uploadBtn">Upload photo</button>
+                            </div>
                         </div>
-                        <div class="progress-item">
-                            <h4><span>Work Experience</span><span>80%</span></h4>
-                            <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
-                        </div>
-                        <div class="progress-item">
-                            <h4><span>Education</span><span>100%</span></h4>
-                            <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
-                        </div>
-                        <div class="progress-item">
-                            <h4><span>Skills</span><span>60%</span></h4>
-                            <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
-                        </div>
-                        <div class="progress-item">
-                            <h4><span>CV / Portfolio</span><span>40%</span></h4>
-                            <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
-                        </div>
+
+                      </form>
+                        <button class="btn-cancel" id="cancelBtn">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -1125,5 +1177,74 @@
         }
     });
 </script>
+
+{{-- script for photo upload card design  --}}
+<script>
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const previewArea = document.getElementById('previewArea');
+  const previewThumb = document.getElementById('previewThumb');
+  const previewName = document.getElementById('previewName');
+  const previewSize = document.getElementById('previewSize');
+  const removeBtn = document.getElementById('removeBtn');
+  const uploadBtn = document.getElementById('uploadBtn');
+  const progressBar = document.getElementById('progressBar');
+  const progressFill = document.getElementById('progressFill');
+  let hasFile = false;
+
+  function formatSize(bytes) {
+    return bytes < 1024 * 1024 ? Math.round(bytes / 1024) + ' KB' : (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function showPreview(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      previewThumb.src = e.target.result;
+      previewName.textContent = file.name;
+      previewSize.textContent = formatSize(file.size);
+      previewArea.style.display = 'flex';
+      uploadBtn.classList.add('active');
+      hasFile = true;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) showPreview(e.target.files[0]); });
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('dragging');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) showPreview(file);
+  });
+
+  removeBtn.addEventListener('click', () => {
+    previewArea.style.display = 'none';
+    fileInput.value = '';
+    uploadBtn.classList.remove('active');
+    hasFile = false;
+  });
+
+  uploadBtn.addEventListener('click', () => {
+    if (!hasFile) return;
+    progressBar.style.display = 'block';
+    let w = 0;
+    const iv = setInterval(() => {
+      w = Math.min(w + Math.random() * 18, 100);
+      progressFill.style.width = Math.round(w) + '%';
+      if (w >= 100) { clearInterval(iv); setTimeout(() => { progressBar.style.display = 'none'; progressFill.style.width = '0'; uploadBtn.textContent = 'Uploaded!'; }, 400); }
+    }, 80);
+  });
+
+  cancelBtn.addEventListener('click', () => {
+    previewArea.style.display = 'none';
+    fileInput.value = '';
+    uploadBtn.classList.remove('active');
+    uploadBtn.textContent = 'Upload photo';
+    hasFile = false;
+  });
+</script>
+
 </body>
 </html>
