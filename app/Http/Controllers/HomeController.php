@@ -60,5 +60,4 @@ class HomeController extends Controller
         return back()->with('success', 'Application submitted successfully!');
     }
 
-
 }
