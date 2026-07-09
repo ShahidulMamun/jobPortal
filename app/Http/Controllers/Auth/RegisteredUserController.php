@@ -50,10 +50,8 @@ class RegisteredUserController extends Controller
 
         // return redirect(RouteServiceProvider::HOME);
 
-        return response()->json([
-        'message' => 'Registration successful!',
-        'redirect' => route('dashboard')
-]);
+         return redirect()->route('dashboard')
+        ->with('success', 'Registration successful');
 
     }
 }
