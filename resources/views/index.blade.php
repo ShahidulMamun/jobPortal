@@ -573,7 +573,7 @@
 <p class="sub">Newest opportunities posted today, tickets ready to claim.</p>
 </div>
 <div class="jobs-grid">
-@forelse ($jobs as $job)
+@foreach ($jobs as $job)
 <div class="job-card">
 <div class="job-main">
 <div class="job-header"><div class="company-logo"><i class="fas fa-code"></i></div>
@@ -584,61 +584,14 @@
     @foreach ($tags as $tag)
      <span class='tag'> {{ trim($tag) }} </span>
     @endforeach
+  {{-- <span class="tag">{{$job->tags}} --}}
+
   </div>
+<div class="job-footer"><span class="salary">{{$job->salary_range}}</span><a href="{{route('jobs.show',$job->slug)}}" class="btn btn-outline">Apply Now</a></div>
 </div>
-<div class="job-stub">
-<span class="salary">{{$job->salary_range}}</span>
-<a href="{{route('jobs.show',$job->slug)}}" class="btn btn-outline-dark">Apply</a>
-</div>
-</div>
-@empty
-<div class="job-card">
-<div class="job-main">
-<div class="job-header"><div class="company-logo"><i class="fas fa-code"></i></div>
-<div class="job-info"><h3>Senior Laravel Developer</h3><p class="company-name">TechCorp Solutions</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i>Dhaka, Bangladesh</span><span class="meta-item"><i class="fas fa-clock"></i>Full Time</span></div>
-<div class="job-tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">API</span></div>
-</div>
-<div class="job-stub">
-<span class="salary">৳60K-90K</span>
-<a href="#" class="btn btn-outline-dark">Apply</a>
-</div>
-</div>
-<div class="job-card">
-<div class="job-main">
-<div class="job-header"><div class="company-logo"><i class="fas fa-bullhorn"></i></div>
-<div class="job-info"><h3>Digital Marketing Executive</h3><p class="company-name">Global Finance Corp</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i>Chattogram, Bangladesh</span><span class="meta-item"><i class="fas fa-clock"></i>Full Time</span></div>
-<div class="job-tags"><span class="tag">SEO</span><span class="tag">Ads</span><span class="tag">Content</span></div>
-</div>
-<div class="job-stub">
-<span class="salary">৳35K-50K</span>
-<a href="#" class="btn btn-outline-dark">Apply</a>
-</div>
-</div>
-<div class="job-card">
-<div class="job-main">
-<div class="job-header"><div class="company-logo"><i class="fas fa-paint-brush"></i></div>
-<div class="job-info"><h3>Product Designer</h3><p class="company-name">HealthCare Plus</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i>Remote</span><span class="meta-item"><i class="fas fa-clock"></i>Contract</span></div>
-<div class="job-tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
-</div>
-<div class="job-stub">
-<span class="salary">৳45K-70K</span>
-<a href="#" class="btn btn-outline-dark">Apply</a>
-</div>
-</div>
-<div class="job-card">
-<div class="job-main">
-<div class="job-header"><div class="company-logo"><i class="fas fa-chart-line"></i></div>
-<div class="job-info"><h3>Financial Analyst</h3><p class="company-name">EduLearn Platform</p></div></div>
-<div class="job-meta"><span class="meta-item"><i class="fas fa-map-marker-alt"></i>Sylhet, Bangladesh</span><span class="meta-item"><i class="fas fa-clock"></i>Part Time</span></div>
-<div class="job-tags"><span class="tag">Excel</span><span class="tag">Reporting</span></div>
-</div>
-<div class="job-stub">
-<span class="salary">৳30K-40K</span>
-<a href="#" class="btn btn-outline-dark">Apply</a>
-</div>
+@endforeach
+
+
 </div>
 @endforelse
 </div>

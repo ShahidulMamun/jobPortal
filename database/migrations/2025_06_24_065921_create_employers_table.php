@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('company_name');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
+            $table->string('photo')->nullable();
             $table->string('designation')->nullable();
             $table->string('password');
             $table->string('company_website')->nullable();
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->boolean('status')->default(true); // Active/Inactive
             $table->timestamp('last_login_at')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
