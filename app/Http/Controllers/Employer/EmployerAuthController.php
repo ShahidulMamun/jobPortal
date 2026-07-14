@@ -5,19 +5,32 @@ namespace App\Http\Controllers\Employer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employer;
+use App\Traits\HasMathCaptcha;
 
 class EmployerAuthController extends Controller
 {
-     
+    use HasMathCaptcha;
     public function showRegisterForm(){
 
-        return view('employer.register-form');
+       $captcha = $this->generateCaptcha(); 
+      
+        return view('employer.register-form', [
+            'captchaNum1' => $captcha['num1'],
+            'captchaNum2' => $captcha['num2'],
+        ]);
+
     }
 
 
     public function register(Request $request)
     {
-      
+
+    if (! $this->verifyCaptcha($request->captcha_answer)) {
+            return back()
+                ->withErrors(['captcha_answer' => 'ক্যাপচা উত্তর ভুল, আবার চেষ্টা করুন।  '])
+                ->withInput($request->except('password', 'password_confirmation'));
+    }
+
     //  return dd($request->all());
     $request->validate([
         'name' => 'required|string|max:255',
