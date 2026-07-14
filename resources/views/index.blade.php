@@ -72,8 +72,8 @@
     transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, background .2s ease, color .2s ease;
   }
 
-  .btn-gold { background: var(--gold); color: var(--ink); }
-  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(240,172,47,0.35); color: var(--ink); }
+  .btn-gold { background: var(--gold); color: #F8F5EF; }
+  .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(240,172,47,0.35); color: #fff; }
 
   .btn-outline { background: transparent; border: 1.5px solid rgba(255,255,255,0.28); color: #fff; }
   .btn-outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
@@ -103,8 +103,11 @@
   }
 
   .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; margin: 0; padding: 0; }
-  .nav-links a:not(.btn) { color: var(--muted-on-dark); font-size: 14px; font-weight: 500; transition: color .2s ease; }
-  .nav-links a:not(.btn):hover { color: #fff; }
+  /* .nav-links a:not(.btn) { color: #F8F5EF; font-size: 14px; font-weight: 500; transition: color .2s ease; }
+  .nav-links a:not(.btn):hover { color: #fff; } */
+
+   .nav-links a { color: #F8F5EF; font-size: 14px; font-weight: 500; transition: color .2s ease; }
+  .nav-links a:hover { color: #122343; }
   .menu-toggle { display: none; color: #fff; font-size: 21px; cursor: pointer; }
 
   .hero {
@@ -446,7 +449,7 @@
 </head>
 <body>
 
-<div class="brand-bar"></div>
+{{-- <div class="brand-bar"></div> --}}
 
 <header>
 <div class="container">
@@ -459,8 +462,8 @@
 <li><a href="#candidates">Candidates</a></li>
 <li><a href="#about">About</a></li>
 <li><a href="#contact">Contact</a></li>
-<li><a href="{{route('login')}}" class="btn btn-outline">Login</a></li>
-<li><a href="{{route('register')}}" class="btn btn-gold">Post a Job</a></li>
+<li><a href="{{route('login')}}" class="btn btn-gold"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+<li><a href="{{route('register')}}" class="btn btn-gold"><i class="fa fa-plus-circle" aria-hidden="true"></i> Register</a></li>
 </ul>
 <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
 </nav>
