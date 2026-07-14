@@ -12,16 +12,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Traits\HasMathCaptcha;
 
 class RegisteredUserController extends Controller
 {
-    /**
-     * Display the registration view.
-     */
+    use HasMathCaptcha;
+
     public function create(): View
     {
-        return view('auth.register');
-    }
+      $captcha = $this->generateCaptcha(); 
+      
+        return view('auth.register', [
+            'captchaNum1' => $captcha['num1'],
+            'captchaNum2' => $captcha['num2'],
+        ]);
+   
+     }
 
     /**
      * Handle an incoming registration request.
@@ -31,12 +37,20 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
+
+      if (! $this->verifyCaptcha($request->captcha_answer)) {
+                   return back()
+                       ->withErrors(['captcha_answer' => 'ক্যাপচা উত্তর ভুল, আবার চেষ্টা করুন।  '])
+                       ->withInput($request->except('password', 'password_confirmation'));
+      }
     //  return $request->all();
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        
 
         $user = User::create([
             'name' => $request->name,

@@ -129,6 +129,20 @@
   .role-card h3 { font-size: 19px; font-weight: 700; color: #fff; margin: 0 0 8px; position: relative; z-index: 1; }
   .role-card p { color: var(--muted-on-dark); font-size: 13.5px; margin: 0; position: relative; z-index: 1; }
 
+  .role-icon {
+    width: 68px; height: 68px;
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 18px;
+    position: relative; z-index: 1;
+    transition: transform .25s ease;
+  }
+  .role-card:hover .role-icon { transform: scale(1.08) rotate(-2deg); }
+
+  .role-icon--employer { background: linear-gradient(150deg, var(--gold), #e08d1f); color: var(--ink); }
+  .role-icon--candidate { background: linear-gradient(150deg, var(--cobalt), #6c86ff); color: #fff; }
+
   /* ===== MODAL ===== */
   .modal {
     display: none;
@@ -172,9 +186,10 @@
   }
 
   .input-wrap { position: relative; }
-  .input-wrap i {
+  .input-wrap i.field-icon {
     position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
     color: var(--muted); font-size: 15px;
+    pointer-events: none;
   }
 
   .form-group input, .form-group select {
@@ -187,14 +202,23 @@
     background: var(--paper);
     transition: all .2s ease;
   }
+  .form-group input.has-toggle { padding-right: 44px; }
   .form-group input:focus, .form-group select:focus {
     outline: none; border-color: var(--cobalt); background: #fff;
     box-shadow: 0 0 0 4px rgba(61,90,255,0.1);
   }
 
   .toggle-eye {
-    position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-    cursor: pointer; color: var(--muted); font-size: 15px; background: none; border: none;
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    cursor: pointer; color: var(--muted); font-size: 15px;
+    background: transparent !important; border: none; box-shadow: none;
+    -webkit-appearance: none; appearance: none;
+    display: flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; line-height: 1;
+    padding: 0; margin: 0; outline: none;
+  }
+  .toggle-eye:focus, .toggle-eye:active, .toggle-eye:hover {
+    background: transparent !important; box-shadow: none; outline: none;
   }
 
   .field-error { color: #c0392b; font-size: 12px; margin-top: 5px; }
@@ -345,13 +369,13 @@
 <!-- User Type Selection -->
 <div class="user-type-container">
 <div class="role-card" onclick="openModal('employer')">
-<img src="https://img.icons8.com/fluency/96/company.png" alt="Employer">
+<div class="role-icon role-icon--employer"><i class="fas fa-building"></i></div>
 <h3>Employer</h3>
 <p>Post jobs & hire top talent</p>
 </div>
 
 <div class="role-card" onclick="openModal('candidate')">
-<img src="https://img.icons8.com/fluency/96/users.png" alt="Candidate">
+<div class="role-icon role-icon--candidate"><i class="fas fa-user"></i></div>
 <h3>Candidate</h3>
 <p>Find jobs & grow your career</p>
 </div>
@@ -370,7 +394,7 @@
 <div class="form-group">
 <label>Full Name</label>
 <div class="input-wrap">
-<i class="fas fa-user"></i>
+<i class="fas fa-user field-icon"></i>
 <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus autocomplete="name">
 </div>
 @error('name')
@@ -381,7 +405,7 @@
 <div class="form-group">
 <label>Email Address</label>
 <div class="input-wrap">
-<i class="fas fa-envelope"></i>
+<i class="fas fa-envelope field-icon"></i>
 <input id="email" type="email" name="email" value="{{ old('email') }}" autocomplete="username">
 </div>
 @error('email')
@@ -392,8 +416,8 @@
 <div class="form-group">
 <label>Password</label>
 <div class="input-wrap">
-<i class="fas fa-lock"></i>
-<input id="password" type="password" name="password" autocomplete="new-password">
+<i class="fas fa-lock field-icon"></i>
+<input id="password" type="password" name="password" class="has-toggle" autocomplete="new-password">
 <button type="button" class="toggle-eye" onclick="togglePassword('password','eye1')"><i class="fas fa-eye" id="eye1"></i></button>
 </div>
 @error('password')
@@ -404,8 +428,8 @@
 <div class="form-group">
 <label>Confirm Password</label>
 <div class="input-wrap">
-<i class="fas fa-lock"></i>
-<input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password">
+<i class="fas fa-lock field-icon"></i>
+<input id="password_confirmation" type="password" name="password_confirmation" class="has-toggle" autocomplete="new-password">
 <button type="button" class="toggle-eye" onclick="togglePassword('password_confirmation','eye2')"><i class="fas fa-eye" id="eye2"></i></button>
 </div>
 @error('password_confirmation')
@@ -418,7 +442,7 @@
 <div class="form-group">
 <label>Company Name</label>
 <div class="input-wrap">
-<i class="fas fa-building"></i>
+<i class="fas fa-building field-icon"></i>
 <input id="company_name" type="text" name="company_name" value="{{ old('company_name') }}" autocomplete="organization">
 </div>
 @error('company_name')
@@ -431,10 +455,10 @@
 <div class="form-group">
 <label>Security Check</label>
 <div class="captcha-box">
-<span class="captcha-question">{{ $captchaNum1 ?? 4 }} + {{ $captchaNum2 ?? 7 }} =</span>
-<input type="text" name="captcha_answer" inputmode="numeric" placeholder="?" required>
-<div class="captcha-refresh" onclick="window.location.reload()" title="Refresh question">
-<i class="fas fa-rotate"></i>
+<span class="captcha-question"><span id="captchaNum1">{{ $captchaNum1 ?? 4 }}</span> + <span id="captchaNum2">{{ $captchaNum2 ?? 7 }}</span> =</span>
+<input type="text" id="captchaAnswer" name="captcha_answer" inputmode="numeric" placeholder="?" required>
+<div class="captcha-refresh" onclick="refreshCaptcha()" title="Refresh question">
+<i class="fas fa-rotate" id="captchaRefreshIcon"></i>
 </div>
 </div>
 @error('captcha_answer')
@@ -518,6 +542,29 @@ function togglePassword(fieldId, iconId) {
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
     }
+}
+
+// AJAX captcha refresh — no full page reload
+function refreshCaptcha() {
+    const refreshIcon = document.getElementById('captchaRefreshIcon');
+    refreshIcon.classList.add('fa-spin');
+
+    fetch("{{ route('captcha.refresh') }}", {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('captchaNum1').innerText = data.num1;
+        document.getElementById('captchaNum2').innerText = data.num2;
+        document.getElementById('captchaAnswer').value = '';
+    })
+    .catch(() => {
+        // fallback if the route isn't wired up yet
+        window.location.reload();
+    })
+    .finally(() => {
+        refreshIcon.classList.remove('fa-spin');
+    });
 }
 
 // Mobile menu
