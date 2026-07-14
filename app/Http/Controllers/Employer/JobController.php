@@ -53,7 +53,7 @@ class JobController extends Controller
 
       $this->authorize('update', $job); // 🔐 check permission
       $categories = Category::where('status', true)->orderBy('name')->pluck('name','id');
-       return view('jobs.edit', compact('job','categories'));
+       return view('employer.jobs.edit', compact('job','categories'));
     }
 
     /**
