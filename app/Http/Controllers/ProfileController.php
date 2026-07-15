@@ -7,6 +7,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\User;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -14,12 +17,25 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
-    }
+
+      public function candidateProfile()
+      {
+        $user = auth()->user();
+        $profile = User::where('id', $user->id)->first();
+        $experiences = Experience::where('user_id', $user->id)->get();
+        $education = Education::where('user_id', $user->id)->get();
+
+        return view('candidate.profile',compact('user','profile','experiences','education'));
+      }
+
+
+
+    // public function candidateProfile(Request $request): View
+    // {
+    //     return view('profile.edit', [
+    //         'user' => $request->user(),
+    //     ]);
+    // }
 
     /**
      * Update the user's profile information.
