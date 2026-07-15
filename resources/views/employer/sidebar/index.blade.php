@@ -14,6 +14,11 @@
             <span class="badge">5</span>
         </a>
 
+         <a class="nav-item" onclick="showTab('postedjob', this)">
+            <i class="fa fa-briefcase"></i> Posted Job
+            <span class="badge">5</span>
+        </a>
+
         <a class="nav-item" onclick="showTab('applications', this)">
             <i class="fas fa-file-alt"></i> My Applications
             <span class="badge">5</span>
@@ -55,7 +60,7 @@
 
     <div class="sidebar-footer">
         <div class="user-info">
-            <div class="user-avatar">JS</div>
+            <div class="user-avatar"><img style="height:40px;width: 40px;border-radius: 32px;" src="{{ asset('storage/' . Auth::guard('employer')->user()->photo) }}"></div>
             <div>
                 <div class="user-name">{{Auth::guard('employer')->user()->name}}</div>
                 <div class="user-role">{{Auth::guard('employer')->user()->designation}}</div>

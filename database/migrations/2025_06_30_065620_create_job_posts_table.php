@@ -48,6 +48,7 @@ return new class extends Migration
             $table->boolean('status')->default(true); // published/draft
             $table->string('tags')->nullable(); // SEO or filtering
             $table->unsignedInteger('view_count')->default(0); // tracking views
+            $table->unsignedInteger('applications_count')->default(0);
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();

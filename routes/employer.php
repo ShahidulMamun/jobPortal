@@ -55,14 +55,13 @@ Route::prefix('employer')->name('employer.')->group(function () {
 
 
     //profile update
-    Route::get('/profile', [EmployerProfileController::class, 'edit'])->name('profile.edit')->middleware('auth:employer');
     Route::put('/profile', [EmployerProfileController::class, 'update'])->name('profile.update')->middleware('auth:employer');
     
     //password update
-    Route::get('/password', [EmployerProfileController::class, 'editPassword'])->name('password.edit')->middleware('auth:employer');
     Route::put('/password', [EmployerProfileController::class, 'updatePassword'])->name('password.update')->middleware('auth:employer');
 
- 
+   //upload photo
+   Route::post('/upload-photo',[EmployerProfileController::class,'employerPhotoUpload'])->name('photo.upload')->middleware('auth:employer');
 
     Route::post('/logout', [EmployerAuthController::class, 'logout'])->name('logout');
 

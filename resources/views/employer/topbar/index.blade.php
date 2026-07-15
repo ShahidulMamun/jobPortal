@@ -13,7 +13,7 @@
             </button>
             <button class="topbar-btn"><i class="fas fa-envelope"></i></button>
             <div class="topbar-user">
-                <div class="topbar-avatar">JS</div>
+                <div class="topbar-avatar"><img style="height:50px;width: 50px;border-radius: 32px;" src="{{ asset('storage/' . Auth::guard('employer')->user()->photo) }}"></div>
                 <div>
                     <div style="font-size:14px;font-weight:600;color:#2c4964">{{Auth::guard('employer')->user()->name}}</div>
                     <div style="font-size:12px;color:#888">Employee</div>
