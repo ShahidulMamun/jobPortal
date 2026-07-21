@@ -14,11 +14,9 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-
-      public function candidateProfile()
+   
+    //Display the user's profile form.
+    public function candidateProfile()
       {
         $user = auth()->user();
         $profile = User::where('id', $user->id)->first();
@@ -28,18 +26,8 @@ class ProfileController extends Controller
         return view('candidate.profile',compact('user','profile','experiences','education'));
       }
 
-
-
-    // public function candidateProfile(Request $request): View
-    // {
-    //     return view('profile.edit', [
-    //         'user' => $request->user(),
-    //     ]);
-    // }
-
-    /**
-     * Update the user's profile information.
-     */
+    
+    //Update the user's profile information.
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -50,7 +38,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('candidate.profile')->with('status', 'profile-updated');
     }
 
     /**

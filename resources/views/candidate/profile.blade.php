@@ -138,7 +138,7 @@
   .icon-btn:hover { background: #fff; border-color: var(--cobalt); }
   .menu-toggle-mobile { display: none; color: var(--ink); font-size: 20px; cursor: pointer; }
 
-  .content { padding: 30px 32px 80px; max-width: 920px; }
+  .content { padding: 30px 32px 80px; max-width: 920px; margin: auto }
 
   /* ===== PROFILE HEADER CARD ===== */
   .profile-header-card {

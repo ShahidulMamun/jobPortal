@@ -103,8 +103,6 @@
   }
 
   .nav-links { list-style: none; display: flex; align-items: center; gap: 28px; margin: 0; padding: 0; }
-  /* .nav-links a:not(.btn) { color: #F8F5EF; font-size: 14px; font-weight: 500; transition: color .2s ease; }
-  .nav-links a:not(.btn):hover { color: #fff; } */
 
    .nav-links a { color: #F8F5EF; font-size: 14px; font-weight: 500; transition: color .2s ease; }
   .nav-links a:hover { color: #122343; }
@@ -241,7 +239,6 @@
   .category-card p { color: var(--cobalt); font-size: 11.5px; font-weight: 600; margin: 0; letter-spacing: 0.04em; font-family: 'JetBrains Mono', monospace; }
 
   .stats { background: #F8F5EF; padding: 4px 0 4px; position: relative; }
-  /* .stats-inner { background: linear-gradient(150deg, var(--slate), var(--ink-2)); border-radius: 22px; padding: 52px 40px; margin: 0; } */
   .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 50px }
 
   .stat-item {
@@ -417,7 +414,6 @@
 
     .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 
-    /* .stats-inner { padding: 36px 22px; border-radius: 18px; } */
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 26px 16px; }
     .stat-item:nth-child(2n+1) { border-left: none; padding-left: 0; }
 
@@ -448,8 +444,6 @@
 </style>
 </head>
 <body>
-
-{{-- <div class="brand-bar"></div> --}}
 
 <header>
 <div class="container">
@@ -576,7 +570,7 @@
 <p class="sub">Newest opportunities posted today, tickets ready to claim.</p>
 </div>
 <div class="jobs-grid">
-@foreach ($jobs as $job)
+@forelse ($jobs as $job)
 <div class="job-card">
 <div class="job-main">
 <div class="job-header"><div class="company-logo"><i class="fas fa-code"></i></div>
@@ -587,15 +581,12 @@
     @foreach ($tags as $tag)
      <span class='tag'> {{ trim($tag) }} </span>
     @endforeach
-  {{-- <span class="tag">{{$job->tags}} --}}
-
-  </div>
+</div>
 <div class="job-footer"><span class="salary">{{$job->salary_range}}</span><a href="{{route('jobs.show',$job->slug)}}" class="btn btn-outline">Apply Now</a></div>
 </div>
-@endforeach
-
-
 </div>
+@empty
+<p>No jobs found right now.</p>
 @endforelse
 </div>
 <div style="text-align:center; margin-top:3rem;"><a href="#" class="btn btn-outline-dark">View all jobs <i class="fas fa-arrow-right"></i></a></div>
@@ -649,7 +640,7 @@
 <div class="stat-item"><i class="fas fa-file-alt"></i><h3>18,920</h3><p>CVs uploaded</p></div>
 </div>
 
-
+</div>
 </section>
 
 

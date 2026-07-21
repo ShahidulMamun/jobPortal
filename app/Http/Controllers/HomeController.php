@@ -16,7 +16,7 @@ class HomeController extends Controller
     }
     public function index(){
       
-      $categories = Category::where('status',1)->withCount('jobs')->get();
+       $categories = Category::where('status',1)->withCount('jobs')->get();
       $jobs = JobPost::latestJobs()->take(5)->get();
       return view('index', compact(['jobs','categories']));    
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Candidate\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobPost;
 
@@ -15,37 +16,28 @@ use App\Models\JobPost;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::get('/user/register', [HomeController::class, 'registerPage'])->name('register.page');
 
+// Guest routes
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/jobs/{job:slug}', [HomeController::class, 'show'])->name('jobs.show');
-// Route::get('/', function () {
-//      return view('home', compact('jobs'));
-// });
 
-Route::get('candidate/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('candidate.dashboard');
-
-Route::middleware('auth')->group(function () {
-
-    Route::get('/candidate/profile', [ProfileController::class, 'candidateProfile'])->name('candidate.profile');
-    
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/job/apply/{job}', [HomeController::class, 'apply'])->name('job.apply');
-
-});
 
  
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{slug}', [JobController::class, 'show'])->name('jobs.show');
-Route::middleware(['auth', 'role:candidate'])->prefix('candidate')->name('candidate.')->group(function () {
+
+Route::middleware(['auth'])->prefix('candidate')->name('candidate.')->group(function () {
+
+    Route::get('/profile', [ProfileController::class, 'candidateProfile'])->name('profile');
+
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::delete('/delete-profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/job/apply/{job}', [HomeController::class, 'apply'])->name('job.apply');
  
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
- 
-   
-    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
  
     Route::get('/applications', [ApplicationController::class, 'index'])->name('applications');
  
