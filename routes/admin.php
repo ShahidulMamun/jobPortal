@@ -49,6 +49,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 
+     // ---------- Country ----------
+    Route::get('countries', [CountryController::class, 'index'])->name('country.index');
+    Route::post('countries', [CountryController::class, 'store'])->name('country.store');
+    Route::put('countries/{country}', [CountryController::class, 'update'])->name('country.update');
+    Route::delete('countries/{country}', [CountryController::class, 'destroy'])->name('country.destroy');
+
+    // ---------- State ----------
+    Route::get('states', [StateController::class, 'index'])->name('state.index');
+    Route::post('states', [StateController::class, 'store'])->name('state.store');
+    Route::put('states/{state}', [StateController::class, 'update'])->name('state.update');
+    Route::delete('states/{state}', [StateController::class, 'destroy'])->name('state.destroy');
+
+    // ---------- City ----------
+    Route::get('cities', [CityController::class, 'index'])->name('city.index');
+    Route::post('cities', [CityController::class, 'store'])->name('city.store');
+    Route::put('cities/{city}', [CityController::class, 'update'])->name('city.update');
+    Route::delete('cities/{city}', [CityController::class, 'destroy'])->name('city.destroy');
+
+
+
 
 });
 
