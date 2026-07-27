@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\CategoryController;
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -50,7 +51,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
      // ---------- Country ----------
-    Route::get('countries', [CountryController::class, 'index'])->name('country.index');
+    Route::get('countries', [CountryController::class, 'create'])->name('country.index');
     Route::post('countries', [CountryController::class, 'store'])->name('country.store');
     Route::put('countries/{country}', [CountryController::class, 'update'])->name('country.update');
     Route::delete('countries/{country}', [CountryController::class, 'destroy'])->name('country.destroy');

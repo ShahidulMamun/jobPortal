@@ -220,7 +220,7 @@
 
         <div class="nav-group-label">লোকেশন</div>
         <a href="{{ route('admin.country.index') }}" class="nav-link {{ request()->routeIs('admin.country.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-earth-asia"></i> কান্ট্রি
+            <i class="fa-solid fa-earth-asia"></i> Country
         </a>
         <a href="{{ route('admin.state.index') }}" class="nav-link {{ request()->routeIs('admin.state.*') ? 'active' : '' }}">
             <i class="fa-solid fa-map"></i> স্টেট
