@@ -223,10 +223,10 @@
             <i class="fa-solid fa-earth-asia"></i> Country
         </a>
         <a href="{{ route('admin.state.index') }}" class="nav-link {{ request()->routeIs('admin.state.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-map"></i> স্টেট
+            <i class="fa-solid fa-map"></i> State
         </a>
         <a href="{{ route('admin.city.index') }}" class="nav-link {{ request()->routeIs('admin.city.*') ? 'active' : '' }}">
-            <i class="fa-solid fa-city"></i> সিটি
+            <i class="fa-solid fa-city"></i> City
         </a>
 
         <div class="nav-group-label">সেটিংস</div>

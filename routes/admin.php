@@ -2,6 +2,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\StateController;
 use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\CategoryController;
 Route::prefix('admin')->name('admin.')->group(function () {
