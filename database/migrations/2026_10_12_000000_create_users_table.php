@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('user_name')->unique()->nullable();
             $table->string('email')->unique();
+            $table->string('designation')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('photo')->nullable();
+            $table->string('experience_level')->nullable();
+            $table->text('skills')->nullable();
             $table->foreignId('country_id')->nullable()->constrained();
             $table->foreignId('state_id')->nullable()->constrained();
             $table->foreignId('district_id')->nullable()->constrained();
@@ -25,6 +28,9 @@ return new class extends Migration
             $table->string('resume')->nullable();
             $table->text('bio')->nullable();
             $table->string('timezone')->nullable();
+            $table->string('linkedin_url')->nullablae();
+            $table->string('github_url')->nullablae();
+            $table->string('portfolio_url')->nullablae();
             $table->enum('status',['pending','active','inactive','suspended','banned'])->default('pending');
             $table->timestamp('banned_at')->nullable();
             $table->unsignedInteger('banned_count')->default('0');

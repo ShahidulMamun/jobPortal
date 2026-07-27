@@ -30,7 +30,7 @@ Route::middleware(['auth'])->prefix('candidate')->name('candidate.')->group(func
 
     Route::get('/profile', [ProfileController::class, 'candidateProfile'])->name('profile');
 
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::POST('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::delete('/delete-profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/job/apply/{job}', [HomeController::class, 'apply'])->name('job.apply');

@@ -412,25 +412,40 @@
 
     <div class="content">
 
+      <!-- /resources/views/post/create.blade.php -->
+
+
+      @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
+
+<!-- Create Post Form -->
+
       <form method="POST" action="{{ route('candidate.profile.update') }}" enctype="multipart/form-data" id="profileForm">
       @csrf
-      @method('PUT')
+
 
       <!-- Profile Header -->
       <div class="profile-header-card">
         <div class="avatar-upload">
-          <div class="avatar-circle">{{ isset($user) ? strtoupper(substr($user->name,0,1)) : 'U' }}</div>
+          <div class="avatar-circle">{{ isset($user) ? strtoupper(substr($user->full_name,0,1)) : 'U' }}</div>
           <label class="camera-btn" for="avatarInput"><i class="fas fa-camera"></i></label>
           <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display:none;">
         </div>
 
         <div class="profile-header-info">
-          <h2>{{ $user->name ?? 'Your Name' }}</h2>
-          <div class="role-title">{{ $profile->headline ?? 'Add a professional headline' }}</div>
+          <h2>{{ $user->full_name ?? 'Your Name' }}</h2>
+          <div class="role-title">{{ $user->designation ?? 'Add a professional headline' }}</div>
           <div class="meta-row">
             <span><i class="fas fa-envelope"></i> {{ $user->email ?? 'you@example.com' }}</span>
-            <span><i class="fas fa-map-marker-alt"></i> {{ $profile->location ?? 'Dhaka, Bangladesh' }}</span>
-            <span><i class="fas fa-briefcase"></i> {{ $profile->experience_level ?? 'Mid-level' }}</span>
+            <span><i class="fas fa-map-marker-alt"></i> {{ $user->location ?? 'Dhaka, Bangladesh' }}</span>
+            <span><i class="fas fa-briefcase"></i> {{ $user->experience_level ?? 'Mid-level' }}</span>
           </div>
         </div>
 
@@ -447,12 +462,12 @@
         <div class="form-row">
           <div class="form-group">
             <label>Full Name</label>
-            <input type="text" name="name" value="{{ old('name', $user->name ?? '') }}">
-            @error('name')<div class="field-error">{{ $message }}</div>@enderror
+            <input type="text" name="full_name" value="{{ old('full_name', $user->full_name ?? '') }}">
+            @error('full_name')<div class="field-error">{{ $message }}</div>@enderror
           </div>
           <div class="form-group">
             <label>Professional Headline <span class="hint">e.g. "Senior Laravel Developer"</span></label>
-            <input type="text" name="headline" value="{{ old('headline', $profile->headline ?? '') }}">
+            <input type="text" name="designation" value="{{ old('designation', $user->designation ?? '') }}">
           </div>
         </div>
 
@@ -464,17 +479,17 @@
           </div>
           <div class="form-group">
             <label>Phone Number</label>
-            <input type="text" name="phone" value="{{ old('phone', $profile->phone ?? '') }}">
+            <input type="text" name="phone" value="{{ old('phone', $user->phone ?? '') }}">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>Location</label>
-            <select name="division">
+            <select name="state_id">
               <option value="">Select Division</option>
               @foreach(['Dhaka','Chattogram','Khulna','Rajshahi','Sylhet','Barishal','Rangpur','Mymensingh'] as $div)
-              <option value="{{ $div }}" {{ (old('division', $profile->division ?? '') == $div) ? 'selected' : '' }}>{{ $div }}</option>
+              <option value="{{ $div }}" {{ (old('division', $user->division ?? '') == $div) ? 'selected' : '' }}>{{ $div }}</option>
               @endforeach
             </select>
           </div>
@@ -483,7 +498,7 @@
             <select name="experience_level">
               <option value="">Select Level</option>
               @foreach(['Entry-level','Mid-level','Senior','Lead / Manager'] as $lvl)
-              <option value="{{ $lvl }}" {{ (old('experience_level', $profile->experience_level ?? '') == $lvl) ? 'selected' : '' }}>{{ $lvl }}</option>
+              <option value="{{ $lvl }}" {{ (old('experience_level', $user->experience_level ?? '') == $lvl) ? 'selected' : '' }}>{{ $lvl }}</option>
               @endforeach
             </select>
           </div>
@@ -502,7 +517,8 @@
         <div class="form-group">
           <label>Add your key skills <span class="hint">press Enter to add</span></label>
           <div class="tags-box" id="skillsBox">
-            @foreach (($profile->skills ?? ['Laravel','MySQL','JavaScript']) as $skill)
+            <?php $skills = json_decode($user->skills)?>
+            @foreach (( $skills ?? ['Laravel','MySQL','JavaScript']) as $skill)
             <span class="skill-tag">{{ $skill }} <button type="button" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
               <input type="hidden" name="skills[]" value="{{ $skill }}">
             </span>
@@ -579,12 +595,12 @@
           <input type="file" id="resumeInput" name="resume" accept=".pdf,.doc,.docx">
         </label>
 
-        @if (isset($profile->resume_name))
+        @if (isset($user->resume_name))
         <div class="uploaded-file-row">
           <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
           <div class="file-info">
-            <h4>{{ $profile->resume_name }}</h4>
-            <span>Uploaded {{ $profile->resume_uploaded_at ?? 'recently' }}</span>
+            <h4>{{ $user->resume_name }}</h4>
+            <span>Uploaded {{ $user->resume_uploaded_at ?? 'recently' }}</span>
           </div>
           <div class="file-remove"><i class="fas fa-trash"></i></div>
         </div>
@@ -597,15 +613,15 @@
 
         <div class="social-input-row">
           <div class="social-icon linkedin"><i class="fab fa-linkedin-in"></i></div>
-          <input type="url" name="linkedin_url" placeholder="https://linkedin.com/in/yourname" value="{{ old('linkedin_url', $profile->linkedin_url ?? '') }}">
+          <input type="url" name="linkedin_url" placeholder="https://linkedin.com/in/yourname" value="{{ old('linkedin_url', $user->linkedin_url ?? '') }}">
         </div>
         <div class="social-input-row">
           <div class="social-icon github"><i class="fab fa-github"></i></div>
-          <input type="url" name="github_url" placeholder="https://github.com/yourname" value="{{ old('github_url', $profile->github_url ?? '') }}">
+          <input type="url" name="github_url" placeholder="https://github.com/yourname" value="{{ old('github_url', $user->github_url ?? '') }}">
         </div>
         <div class="social-input-row">
           <div class="social-icon portfolio"><i class="fas fa-globe"></i></div>
-          <input type="url" name="portfolio_url" placeholder="https://yourportfolio.com" value="{{ old('portfolio_url', $profile->portfolio_url ?? '') }}">
+          <input type="url" name="portfolio_url" placeholder="https://yourportfolio.com" value="{{ old('portfolio_url', $user->portfolio_url ?? '') }}">
         </div>
       </div>
 
