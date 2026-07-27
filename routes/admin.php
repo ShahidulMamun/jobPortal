@@ -3,6 +3,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\JobController as AdminJobController;
 use App\Http\Controllers\CategoryController;
@@ -63,6 +64,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('states', [StateController::class, 'store'])->name('state.store');
     Route::put('states/{state}', [StateController::class, 'update'])->name('state.update');
     Route::delete('states/{state}', [StateController::class, 'destroy'])->name('state.destroy');
+
+     // ---------- District ----------
+    Route::get('district', [DistrictController::class, 'index'])->name('district.index');
+    Route::post('district', [DistrictController::class, 'store'])->name('district.store');
+    Route::put('district/{district}', [DistrictController::class, 'update'])->name('district.update');
+    Route::delete('district/{district}', [DistrictController::class, 'destroy'])->name('district.destroy');
 
     // ---------- City ----------
     Route::get('cities', [CityController::class, 'index'])->name('city.index');

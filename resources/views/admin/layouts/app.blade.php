@@ -225,6 +225,11 @@
         <a href="{{ route('admin.state.index') }}" class="nav-link {{ request()->routeIs('admin.state.*') ? 'active' : '' }}">
             <i class="fa-solid fa-map"></i> State
         </a>
+
+        <a href="{{ route('admin.district.index') }}" class="nav-link {{ request()->routeIs('admin.district.*') ? 'active' : '' }}">
+            <i class="fa-solid fa-map"></i> District
+        </a>
+
         <a href="{{ route('admin.city.index') }}" class="nav-link {{ request()->routeIs('admin.city.*') ? 'active' : '' }}">
             <i class="fa-solid fa-city"></i> City
         </a>

@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\District;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -12,28 +12,32 @@ class CityController extends Controller
 {
     public function index()
     {
-        $cities = City::with('state.country')->latest()->paginate(20);
-        $states = State::with('country')->where('status', 1)->orderBy('name')->get();
+        $cities = City::with(['country', 'state', 'district'])->latest()->paginate(20);
         $countries = Country::where('status', 1)->orderBy('name')->get();
+        $states = State::where('status', 1)->orderBy('name')->get();
+        $districts = District::where('status', 1)->orderBy('name')->get();
 
-        return view('admin.city.create', compact('cities', 'states', 'countries'));
+        return view('admin.city.create', compact('cities', 'countries', 'states', 'districts'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'state_id' => ['required', 'exists:states,id'],
-            'name'     => [
+            'country_id'  => ['required', 'exists:countries,id'],
+            'state_id'    => ['required', 'exists:states,id'],
+            'district_id' => ['required', 'exists:districts,id'],
+            'name'        => [
                 'required', 'string', 'max:100',
-                Rule::unique('cities', 'name')->where('state_id', $request->state_id),
+                Rule::unique('cities', 'name')->where('district_id', $request->district_id),
             ],
         ]);
 
         City::create([
-            'country_id'=>$request->country_id,
-            'state_id' => $request->state_id,
-            'name'     => $request->name,
-            'status'   => 1,
+            'country_id'  => $request->country_id,
+            'state_id'    => $request->state_id,
+            'district_id' => $request->district_id,
+            'name'        => $request->name,
+            'status'      => 1,
         ]);
 
         return redirect()
@@ -44,19 +48,23 @@ class CityController extends Controller
     public function update(Request $request, City $city)
     {
         $request->validate([
-            'state_id' => ['required', 'exists:states,id'],
-            'name'     => [
+            'country_id'  => ['required', 'exists:countries,id'],
+            'state_id'    => ['required', 'exists:states,id'],
+            'district_id' => ['required', 'exists:districts,id'],
+            'name'        => [
                 'required', 'string', 'max:100',
                 Rule::unique('cities', 'name')
-                    ->where('state_id', $request->state_id)
+                    ->where('district_id', $request->district_id)
                     ->ignore($city->id),
             ],
         ]);
 
         $city->update([
-            'state_id' => $request->state_id,
-            'name'     => $request->name,
-            'status'   => $request->has('status') ? 1 : 0,
+            'country_id'  => $request->country_id,
+            'state_id'    => $request->state_id,
+            'district_id' => $request->district_id,
+            'name'        => $request->name,
+            'status'      => $request->has('status') ? 1 : 0,
         ]);
 
         return redirect()
