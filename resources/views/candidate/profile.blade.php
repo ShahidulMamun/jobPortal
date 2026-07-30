@@ -162,7 +162,10 @@
     background: linear-gradient(150deg, var(--cobalt), #6c86ff);
     display: flex; align-items: center; justify-content: center;
     font-size: 32px; font-weight: 700; color: #fff;
-    border: 3px solid rgba(255,255,255,0.2);
+    overflow: clip;
+  }
+  .avatar-upload .avatar-circle img {
+    width: 100%; height: 100%; object-fit: cover;
   }
   .avatar-upload .camera-btn {
     position: absolute; bottom: 0; right: 0;
@@ -201,6 +204,8 @@
   }
 
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .form-row-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
   .form-group { margin-bottom: 16px; }
   .form-group:last-child { margin-bottom: 0; }
   .form-group label { display: block; font-size: 12.5px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
@@ -217,6 +222,7 @@
     outline: none; border-color: var(--cobalt); background: #fff;
     box-shadow: 0 0 0 4px rgba(61,90,255,0.1);
   }
+  .form-group select:disabled { opacity: .55; cursor: not-allowed; }
 
   .field-error { color: #c0392b; font-size: 11.5px; margin-top: 5px; }
 
@@ -287,6 +293,50 @@
   .uploaded-file-row .file-remove { color: var(--muted); cursor: pointer; font-size: 14px; }
   .uploaded-file-row .file-remove:hover { color: var(--rose); }
 
+  /* resume tabs */
+  .resume-tabs {
+    display: flex; gap: 8px; margin-bottom: 18px;
+    background: var(--paper); border-radius: 12px; padding: 4px;
+  }
+  .resume-tab-btn {
+    flex: 1; text-align: center; padding: 9px 14px;
+    border: none; background: transparent; border-radius: 9px;
+    font-size: 13px; font-weight: 600; color: var(--muted);
+    cursor: pointer; transition: background .2s ease, color .2s ease;
+  }
+  .resume-tab-btn.active { background: #fff; color: var(--ink); box-shadow: 0 2px 8px rgba(10,23,48,0.08); }
+  .resume-tab-panel { display: none; }
+  .resume-tab-panel.active { display: block; }
+
+  .resume-create-box {
+    text-align: center; padding: 32px 20px;
+    background: var(--paper-2); border-radius: 14px;
+    border: 1.5px dashed #ddd6c4;
+  }
+  .resume-create-box i { font-size: 26px; color: var(--cobalt); margin-bottom: 10px; display: block; }
+  .resume-create-box p { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+  .resume-create-box .btn-create-resume {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px; border-radius: 999px; font-weight: 600; font-size: 13.5px;
+    background: linear-gradient(160deg, #16273f, #1b2f4d); color: #fff; border: none; cursor: pointer;
+  }
+
+  .resume-selected-preview {
+    display: none; align-items: center; gap: 12px;
+    background: var(--paper-2); border-radius: 12px; padding: 12px 14px; margin-top: 14px;
+  }
+  .resume-selected-preview.active { display: flex; }
+  .resume-selected-preview .file-icon {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: rgba(61,90,255,0.12); color: var(--cobalt);
+    display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0;
+  }
+  .resume-selected-preview .file-info { flex: 1; min-width: 0; }
+  .resume-selected-preview h4 { margin: 0; font-size: 13px; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .resume-selected-preview span { font-size: 11.5px; color: var(--muted); }
+  .resume-selected-preview .file-remove { color: var(--muted); cursor: pointer; font-size: 14px; }
+  .resume-selected-preview .file-remove:hover { color: var(--rose); }
+
   /* social links */
   .social-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .social-input-row:last-child { margin-bottom: 0; }
@@ -343,7 +393,7 @@
     .completion-pill { width: 100%; }
 
     .panel { padding: 20px 18px; }
-    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .form-row, .form-row-3 { grid-template-columns: 1fr; gap: 0; }
 
     .save-bar { flex-direction: column-reverse; align-items: stretch; margin: 0 -18px -60px; }
     .btn-save, .btn-cancel { width: 100%; justify-content: center; }
@@ -412,9 +462,6 @@
 
     <div class="content">
 
-      <!-- /resources/views/post/create.blade.php -->
-
-
       @if ($errors->any())
           <div class="alert alert-danger">
               <ul>
@@ -425,8 +472,6 @@
           </div>
       @endif
 
-<!-- Create Post Form -->
-
       <form method="POST" action="{{ route('candidate.profile.update') }}" enctype="multipart/form-data" id="profileForm">
       @csrf
 
@@ -434,9 +479,15 @@
       <!-- Profile Header -->
       <div class="profile-header-card">
         <div class="avatar-upload">
-          <div class="avatar-circle">{{ isset($user) ? strtoupper(substr($user->full_name,0,1)) : 'U' }}</div>
+          <div class="avatar-circle">
+            @if(!empty($user->photo))
+                <img src="{{ asset('storage/'.$user->photo) }}" alt="{{ $user->full_name }}">
+            @else
+                {{ strtoupper(substr($user->full_name, 0, 1)) }}
+            @endif
+          </div>
           <label class="camera-btn" for="avatarInput"><i class="fas fa-camera"></i></label>
-          <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display:none;">
+          <input type="file" id="avatarInput" name="photo" accept="image/*" style="display:none;">
         </div>
 
         <div class="profile-header-info">
@@ -444,7 +495,7 @@
           <div class="role-title">{{ $user->designation ?? 'Add a professional headline' }}</div>
           <div class="meta-row">
             <span><i class="fas fa-envelope"></i> {{ $user->email ?? 'you@example.com' }}</span>
-            <span><i class="fas fa-map-marker-alt"></i> {{ $user->location ?? 'Dhaka, Bangladesh' }}</span>
+            <span><i class="fas fa-map-marker-alt"></i> {{ $user->state->name}},{{ $user->country->name }}</span>
             <span><i class="fas fa-briefcase"></i> {{ $user->experience_level ?? 'Mid-level' }}</span>
           </div>
         </div>
@@ -483,16 +534,57 @@
           </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row-4">
           <div class="form-group">
-            <label>Location</label>
-            <select name="state_id">
-              <option value="">Select Division</option>
-              @foreach(['Dhaka','Chattogram','Khulna','Rajshahi','Sylhet','Barishal','Rangpur','Mymensingh'] as $div)
-              <option value="{{ $div }}" {{ (old('division', $user->division ?? '') == $div) ? 'selected' : '' }}>{{ $div }}</option>
+            <label>Country</label>
+            <select name="country_id" id="countrySelect">
+              <option value="" disabled {{ old('country_id', $user->country_id ?? '') ? '' : 'selected' }}>Select Country</option>
+              @foreach($countries ?? [] as $country)
+                <option value="{{ $country->id }}" {{ (old('country_id', $user->country_id ?? '') == $country->id) ? 'selected' : '' }}>
+                  {{ $country->name }}
+                </option>
               @endforeach
             </select>
           </div>
+          <div class="form-group">
+            <label>State / Division</label>
+            <select name="state_id" id="stateSelect" disabled>
+              <option value="" disabled {{ old('state_id', $user->state_id ?? '') ? '' : 'selected' }}>Select Country First</option>
+              @foreach($states ?? [] as $state)
+                <option value="{{ $state->id }}" data-parent="{{ $state->country_id }}" hidden
+                  {{ (old('state_id', $user->state_id ?? '') == $state->id) ? 'selected' : '' }}>
+                  {{ $state->name }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label>District</label>
+            <select name="district_id" id="districtSelect" disabled>
+              <option value="" disabled {{ old('district_id', $user->district_id ?? '') ? '' : 'selected' }}>Select State First</option>
+              @foreach($districts ?? [] as $district)
+                <option value="{{ $district->id }}" data-parent="{{ $district->state_id }}" hidden
+                  {{ (old('district_id', $user->district_id ?? '') == $district->id) ? 'selected' : '' }}>
+                  {{ $district->name }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <select name="city_id" id="citySelect" disabled>
+              <option value="" disabled {{ old('city_id', $user->city_id ?? '') ? '' : 'selected' }}>Select District First</option>
+              @foreach($cities ?? [] as $city)
+                <option value="{{ $city->id }}" data-parent="{{ $city->district_id }}" hidden
+                  {{ (old('city_id', $user->city_id ?? '') == $city->id) ? 'selected' : '' }}>
+                  {{ $city->name }}
+                </option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <label>Experience Level</label>
             <select name="experience_level">
@@ -502,11 +594,12 @@
               @endforeach
             </select>
           </div>
+          <div class="form-group"></div>
         </div>
 
         <div class="form-group">
           <label>About / Bio</label>
-          <textarea name="bio" placeholder="Tell employers a bit about yourself...">{{ old('bio', $profile->bio ?? '') }}</textarea>
+          <textarea name="bio" placeholder="Tell employers a bit about yourself...">{{ old('bio', $user->bio ?? '') }}</textarea>
         </div>
       </div>
 
@@ -537,23 +630,46 @@
 
         <div id="experienceContainer">
           @foreach ($experiences ?? [1] as $index => $exp)
+          @php
+            $expStart = optional($exp)->start_date ? \Carbon\Carbon::parse(optional($exp)->start_date)->format('Y-m') : '';
+            $expEnd   = optional($exp)->end_date ? \Carbon\Carbon::parse(optional($exp)->end_date)->format('Y-m') : '';
+          @endphp
           <div class="repeat-block">
             <div class="remove-btn" onclick="this.closest('.repeat-block').remove()"><i class="fas fa-times"></i></div>
             <div class="form-row">
-              <div class="form-group"><label>Job Title</label><input type="text" name="experience[{{ $index }}][title]" placeholder="e.g. Backend Developer"></div>
-              <div class="form-group"><label>Company Name</label><input type="text" name="experience[{{ $index }}][company]" placeholder="e.g. TechCorp Solutions"></div>
+              <div class="form-group">
+                <label>Job Title</label>
+                <input type="text" name="experience[{{ $index }}][job_title]"
+                       value="{{ old('experience.'.$index.'.job_title', optional($exp)->job_title) }}"
+                       placeholder="e.g. Backend Developer">
+              </div>
+              <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" name="experience[{{ $index }}][company_name]"
+                       value="{{ old('experience.'.$index.'.company_name', optional($exp)->company_name) }}"
+                       placeholder="e.g. TechCorp Solutions">
+              </div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Start Date</label><input type="month" name="experience[{{ $index }}][start_date]"></div>
-              <div class="form-group"><label>End Date</label><input type="month" name="experience[{{ $index }}][end_date]"></div>
+              <div class="form-group">
+                <label>Start Date</label>
+                <input type="month" name="experience[{{ $index }}][start_date]"
+                       value="{{ old('experience.'.$index.'.start_date', $expStart) }}">
+              </div>
+              <div class="form-group">
+                <label>End Date</label>
+                <input type="month" name="experience[{{ $index }}][end_date]"
+                       value="{{ old('experience.'.$index.'.end_date', $expEnd) }}">
+              </div>
             </div>
             <div class="current-check">
-              <input type="checkbox" name="experience[{{ $index }}][current]" id="current{{ $index }}">
+              <input type="checkbox" name="experience[{{ $index }}][current]" id="current{{ $index }}" value="1"
+                     {{ old('experience.'.$index.'.current', optional($exp)->current) ? 'checked' : '' }}>
               <label for="current{{ $index }}">I currently work here</label>
             </div>
             <div class="form-group">
               <label>Description</label>
-              <textarea name="experience[{{ $index }}][description]" placeholder="What did you work on?"></textarea>
+              <textarea name="experience[{{ $index }}][description]" placeholder="What did you work on?">{{ old('experience.'.$index.'.description', optional($exp)->description) }}</textarea>
             </div>
           </div>
           @endforeach
@@ -572,12 +688,32 @@
           <div class="repeat-block">
             <div class="remove-btn" onclick="this.closest('.repeat-block').remove()"><i class="fas fa-times"></i></div>
             <div class="form-row">
-              <div class="form-group"><label>Degree / Certificate</label><input type="text" name="education[{{ $index }}][degree]" placeholder="e.g. BSc in CSE"></div>
-              <div class="form-group"><label>Institution</label><input type="text" name="education[{{ $index }}][institution]" placeholder="e.g. University of Dhaka"></div>
+              <div class="form-group">
+                <label>Degree / Certificate</label>
+                <input type="text" name="education[{{ $index }}][degree]"
+                       value="{{ old('education.'.$index.'.degree', optional($edu)->degree) }}"
+                       placeholder="e.g. BSc in CSE">
+              </div>
+              <div class="form-group">
+                <label>Institution</label>
+                <input type="text" name="education[{{ $index }}][institution]"
+                       value="{{ old('education.'.$index.'.institution', optional($edu)->institution) }}"
+                       placeholder="e.g. University of Dhaka">
+              </div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Start Year</label><input type="number" name="education[{{ $index }}][start_year]" placeholder="2018"></div>
-              <div class="form-group"><label>End Year</label><input type="number" name="education[{{ $index }}][end_year]" placeholder="2022"></div>
+              <div class="form-group">
+                <label>Start Year</label>
+                <input type="number" name="education[{{ $index }}][start_year]"
+                       value="{{ old('education.'.$index.'.start_year', optional($edu)->start_year) }}"
+                       placeholder="2018">
+              </div>
+              <div class="form-group">
+                <label>End Year</label>
+                <input type="number" name="education[{{ $index }}][end_year]"
+                       value="{{ old('education.'.$index.'.end_year', optional($edu)->end_year) }}"
+                       placeholder="2022">
+              </div>
             </div>
           </div>
           @endforeach
@@ -588,23 +724,54 @@
       <div class="panel">
         <div class="panel-header"><h2><i class="fas fa-file-pdf"></i> Resume / CV</h2></div>
 
-        <label class="resume-dropzone" for="resumeInput">
-          <i class="fas fa-cloud-arrow-up"></i>
-          <p>Click to upload or drag & drop</p>
-          <span>PDF or DOCX, max 5MB</span>
-          <input type="file" id="resumeInput" name="resume" accept=".pdf,.doc,.docx">
-        </label>
-
-        @if (isset($user->resume_name))
-        <div class="uploaded-file-row">
-          <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
-          <div class="file-info">
-            <h4>{{ $user->resume_name }}</h4>
-            <span>Uploaded {{ $user->resume_uploaded_at ?? 'recently' }}</span>
-          </div>
-          <div class="file-remove"><i class="fas fa-trash"></i></div>
+        <div class="resume-tabs">
+          <button type="button" class="resume-tab-btn active" onclick="switchResumeTab('upload')" id="tabBtnUpload">Upload Resume</button>
+          <button type="button" class="resume-tab-btn" onclick="switchResumeTab('create')" id="tabBtnCreate">Create Resume</button>
         </div>
-        @endif
+
+        <!-- Upload tab -->
+        <div class="resume-tab-panel active" id="resumeTabUpload">
+          <label class="resume-dropzone" for="resumeInput" id="resumeDropzone">
+            <i class="fas fa-cloud-arrow-up"></i>
+            <p>Click to upload or drag & drop</p>
+            <span>PDF or DOCX, max 5MB</span>
+            <input type="file" id="resumeInput" name="resume" accept=".pdf,.doc,.docx">
+          </label>
+
+          <!-- Shows immediately when a new file is picked, before saving -->
+          <div class="resume-selected-preview" id="resumeSelectedPreview">
+            <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+            <div class="file-info">
+              <h4 id="resumeSelectedName"></h4>
+              <span>Selected — will upload on Save</span>
+            </div>
+            <div class="file-remove" id="resumeSelectedRemove" title="Remove"><i class="fas fa-times"></i></div>
+          </div>
+
+          @if (!empty($user->resume))
+          <div class="uploaded-file-row">
+            <div class="file-icon"><i class="fas fa-file-pdf"></i></div>
+            <div class="file-info">
+              <h4>Resume on file</h4>
+              <span>Uploaded {{ $user->resume_uploaded_at ?? 'recently' }}</span>
+            </div>
+            <a href="{{ asset('storage/'.$user->resume) }}" target="_blank" class="file-remove" title="View Resume">
+              <i class="fas fa-eye"></i> View Resume
+            </a>
+          </div>
+          @endif
+        </div>
+
+        <!-- Create tab -->
+        <div class="resume-tab-panel" id="resumeTabCreate">
+          <div class="resume-create-box">
+            <i class="fas fa-file-circle-plus"></i>
+            <p>Build a professional resume right here using your profile details — no design skills needed.</p>
+            <a href="" class="btn-create-resume">
+              <i class="fas fa-wand-magic-sparkles"></i> Start Building Resume
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Social Links -->
@@ -667,15 +834,15 @@ function addExperienceBlock() {
   block.innerHTML = `
     <div class="remove-btn" onclick="this.closest('.repeat-block').remove()"><i class="fas fa-times"></i></div>
     <div class="form-row">
-      <div class="form-group"><label>Job Title</label><input type="text" name="experience[${expIndex}][title]" placeholder="e.g. Backend Developer"></div>
-      <div class="form-group"><label>Company Name</label><input type="text" name="experience[${expIndex}][company]" placeholder="e.g. TechCorp Solutions"></div>
+      <div class="form-group"><label>Job Title</label><input type="text" name="experience[${expIndex}][job_title]" placeholder="e.g. Backend Developer"></div>
+      <div class="form-group"><label>Company Name</label><input type="text" name="experience[${expIndex}][company_name]" placeholder="e.g. TechCorp Solutions"></div>
     </div>
     <div class="form-row">
       <div class="form-group"><label>Start Date</label><input type="month" name="experience[${expIndex}][start_date]"></div>
       <div class="form-group"><label>End Date</label><input type="month" name="experience[${expIndex}][end_date]"></div>
     </div>
     <div class="current-check">
-      <input type="checkbox" name="experience[${expIndex}][current]" id="current${expIndex}">
+      <input type="checkbox" name="experience[${expIndex}][current]" id="current${expIndex}" value="1">
       <label for="current${expIndex}">I currently work here</label>
     </div>
     <div class="form-group">
@@ -708,12 +875,34 @@ function addEducationBlock() {
   eduIndex++;
 }
 
-// Show selected resume filename
-document.getElementById('resumeInput').addEventListener('change', function () {
+// Resume: inline preview instead of alert
+const resumeInput = document.getElementById('resumeInput');
+const resumeSelectedPreview = document.getElementById('resumeSelectedPreview');
+const resumeSelectedName = document.getElementById('resumeSelectedName');
+const resumeSelectedRemove = document.getElementById('resumeSelectedRemove');
+const resumeDropzone = document.getElementById('resumeDropzone');
+
+resumeInput.addEventListener('change', function () {
   if (this.files.length > 0) {
-    alert('Selected: ' + this.files[0].name + ' — this will upload on Save.');
+    resumeSelectedName.textContent = this.files[0].name;
+    resumeSelectedPreview.classList.add('active');
+    resumeDropzone.style.display = 'none';
   }
 });
+
+resumeSelectedRemove.addEventListener('click', function () {
+  resumeInput.value = '';
+  resumeSelectedPreview.classList.remove('active');
+  resumeDropzone.style.display = '';
+});
+
+// Resume tabs: Upload vs Create
+function switchResumeTab(tab) {
+  document.getElementById('tabBtnUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('tabBtnCreate').classList.toggle('active', tab === 'create');
+  document.getElementById('resumeTabUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('resumeTabCreate').classList.toggle('active', tab === 'create');
+}
 
 // Avatar preview
 document.getElementById('avatarInput').addEventListener('change', function () {
@@ -721,13 +910,55 @@ document.getElementById('avatarInput').addEventListener('change', function () {
     const reader = new FileReader();
     reader.onload = function (e) {
       const circle = document.querySelector('.avatar-circle');
-      circle.style.backgroundImage = `url(${e.target.result})`;
-      circle.style.backgroundSize = 'cover';
-      circle.style.backgroundPosition = 'center';
-      circle.innerText = '';
+      circle.innerHTML = '';
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      circle.appendChild(img);
     };
     reader.readAsDataURL(this.files[0]);
   }
+});
+
+// ===== Country -> State -> District -> City cascade =====
+function cascadeSelect(parentSelect, childSelect, placeholderText, preselectedChildId) {
+  function filterOptions() {
+    const parentId = parentSelect.value;
+    let hasVisibleSelected = false;
+
+    Array.from(childSelect.options).forEach(function (opt) {
+      if (!opt.dataset.parent) return; // skip placeholder option
+      const match = opt.dataset.parent === parentId;
+      opt.hidden = !match;
+      opt.disabled = !match;
+      if (match && opt.selected) hasVisibleSelected = true;
+    });
+
+    childSelect.disabled = !parentId;
+    childSelect.options[0].text = parentId ? placeholderText : childSelect.options[0].text;
+
+    if (!hasVisibleSelected) {
+      childSelect.value = '';
+    }
+    childSelect.dispatchEvent(new Event('change'));
+  }
+
+  parentSelect.addEventListener('change', filterOptions);
+  filterOptions();
+
+  if (preselectedChildId) {
+    childSelect.value = preselectedChildId;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const countrySelect = document.getElementById('countrySelect');
+  const stateSelect = document.getElementById('stateSelect');
+  const districtSelect = document.getElementById('districtSelect');
+  const citySelect = document.getElementById('citySelect');
+
+  cascadeSelect(countrySelect, stateSelect, 'Select State / Division', '{{ old('state_id', $user->state_id ?? '') }}');
+  cascadeSelect(stateSelect, districtSelect, 'Select District', '{{ old('district_id', $user->district_id ?? '') }}');
+  cascadeSelect(districtSelect, citySelect, 'Select City', '{{ old('city_id', $user->city_id ?? '') }}');
 });
 </script>
 
