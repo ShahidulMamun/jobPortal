@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Candidate\DashboardController;
+use App\Http\Controllers\Candidate\JobController as CandidateJobController;
 use Illuminate\Support\Facades\Route;
 use App\Models\JobPost;
 
@@ -22,19 +23,20 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/jobs/{job:slug}', [HomeController::class, 'show'])->name('jobs.show');
 
 
- 
-Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{slug}', [JobController::class, 'show'])->name('jobs.show');
+
 
 Route::middleware(['auth'])->prefix('candidate')->name('candidate.')->group(function () {
+    
 
+Route::get('/jobs', [CandidateJobController::class, 'index'])->name('jobs.index');
+Route::get('/jobs/{slug}', [CandidateJobController::class, 'show'])->name('jobs.show');
+
+    //profile manage routes
     Route::get('/profile', [ProfileController::class, 'candidateProfile'])->name('profile');
-
     Route::POST('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
     Route::delete('/delete-profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/job/apply/{job}', [HomeController::class, 'apply'])->name('job.apply');
- 
+
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 

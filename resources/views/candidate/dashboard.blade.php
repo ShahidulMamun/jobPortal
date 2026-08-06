@@ -331,7 +331,7 @@
 
     <div class="side-section-label">Job Search</div>
     <ul class="side-nav">
-      <li><a href="{{ route('jobs.index') }}"><i class="fas fa-magnifying-glass"></i> Find Jobs</a></li>
+      <li><a href="{{ route('candidate.jobs.index') }}"><i class="fas fa-magnifying-glass"></i> Find Jobs</a></li>
       <li>
         <a href="{{ route('candidate.applications') }}">
           <i class="fas fa-file-lines"></i> Applied Jobs
@@ -488,7 +488,7 @@
               <div class="empty-state">
                 <i class="fas fa-inbox"></i>
                 You haven't applied to any jobs yet.<br>
-                <a href="{{ route('jobs.index') }}" style="color:var(--cobalt); font-weight:600;">Browse open jobs →</a>
+                <a href="{{ route('candidate.jobs.index') }}" style="color:var(--cobalt); font-weight:600;">Browse open jobs →</a>
               </div>
             @endif
           </div>
@@ -496,7 +496,7 @@
           <div class="panel">
             <div class="panel-header">
               <h2><i class="fas fa-star"></i> Recommended For You</h2>
-              <a href="{{ route('jobs.index') }}" class="view-all">View all</a>
+              <a href="{{ route('candidate.jobs.index') }}" class="view-all">View all</a>
             </div>
 
             @if (!empty($recommendedJobs) && count($recommendedJobs))
@@ -566,7 +566,7 @@
           <div class="panel">
             <div class="panel-header"><h2><i class="fas fa-bolt"></i> Quick Actions</h2></div>
             <div class="quick-actions">
-              <a href="{{ route('jobs.index') }}" class="quick-action-btn"><i class="fas fa-magnifying-glass"></i> Find New Jobs</a>
+              <a href="{{ route('candidate.jobs.index') }}" class="quick-action-btn"><i class="fas fa-magnifying-glass"></i> Find New Jobs</a>
               <a href="{{ route('candidate.profile') }}" class="quick-action-btn"><i class="fas fa-user-pen"></i> Update Profile</a>
               <a href="{{ route('candidate.alerts') }}" class="quick-action-btn"><i class="fas fa-bell"></i> Manage Job Alerts</a>
             </div>

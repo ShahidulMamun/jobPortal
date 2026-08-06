@@ -495,7 +495,7 @@
           <div class="role-title">{{ $user->designation ?? 'Add a professional headline' }}</div>
           <div class="meta-row">
             <span><i class="fas fa-envelope"></i> {{ $user->email ?? 'you@example.com' }}</span>
-            <span><i class="fas fa-map-marker-alt"></i> {{ $user->state->name}},{{ $user->country->name }}</span>
+            <span><i class="fas fa-map-marker-alt"></i> {{ $user->state->name ?? ''}},{{ $user->country->name ?? '' }}</span>
             <span><i class="fas fa-briefcase"></i> {{ $user->experience_level ?? 'Mid-level' }}</span>
           </div>
         </div>
