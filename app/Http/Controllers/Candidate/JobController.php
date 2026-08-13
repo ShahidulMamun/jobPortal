@@ -8,7 +8,7 @@ use App\Models\JobPost;
 class JobController extends Controller
 {
     public function index(){
-        $jobs = JobPost::where('status','active')->get();
+        $jobs = JobPost::where('status',1)->get();
         return view('candidate.jobs.index',compact('jobs'));
     }
 }

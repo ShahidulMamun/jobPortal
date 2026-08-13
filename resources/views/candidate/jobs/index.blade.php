@@ -269,20 +269,27 @@
 
   /* ===== MOBILE ===== */
   @media (max-width: 992px) {
-    .jobs-layout { grid-template-columns: 1fr; }
-    .filter-panel { display: none; position: fixed; top: 0; left: 0; height: 100vh; width: 300px; z-index: 300;
-      border-radius: 0; overflow-y: auto; transform: translateX(-100%); transition: transform .25s ease; }
-    .filter-panel.active { display: block; transform: translateX(0); }
+    .jobs-layout { grid-template-columns: 1fr; gap: 0; }
+    .filter-panel {
+      display: block; position: fixed; top: 0; left: 0; height: 100vh;
+      width: 300px; max-width: 85vw; z-index: 300;
+      border-radius: 0; overflow-y: auto;
+      transform: translateX(-100%); transition: transform .25s ease;
+      box-shadow: 20px 0 50px rgba(0,0,0,0.3);
+    }
+    .filter-panel.active { transform: translateX(0); }
     .mobile-filter-toggle {
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
       background: #fff; border: 1.5px solid var(--hairline); border-radius: 10px;
-      padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--ink);
+      padding: 12px 16px; font-size: 13.5px; font-weight: 600; color: var(--ink);
       cursor: pointer; margin-bottom: 18px;
     }
     .footer-content { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 720px) {
+    .container { padding: 0 18px; }
+
     .nav-links {
       position: fixed; top: 68px; left: 0; right: 0;
       background: rgba(10, 23, 48, 0.98);
@@ -298,23 +305,69 @@
     .nav-links a.btn { width: 100%; justify-content: center; }
     .menu-toggle { display: block; }
 
-    .jobs-hero { padding: 30px 0 46px; }
-    .jobs-hero h1 { font-size: 22px; }
-    .search-box { padding: 12px; }
-    .search-form { grid-template-columns: 1fr; }
+    .jobs-hero { padding: 26px 0 42px; }
+    .jobs-hero h1 { font-size: 21px; margin-bottom: 16px; }
+    .jobs-hero .eyebrow { font-size: 10px; }
+    .search-box { padding: 10px; border-radius: 14px; }
+    .search-form { grid-template-columns: 1fr; gap: 8px; }
+    .search-input { padding: 12px 14px; }
 
-    .jobs-layout { padding: 24px 0 50px; }
-    .results-header { flex-direction: column; align-items: flex-start; }
+    .jobs-layout { padding: 20px 0 44px; }
 
-    .job-card { flex-direction: column; }
+    .results-header { flex-direction: column; align-items: stretch; gap: 10px; margin-bottom: 14px; }
+    .results-count { font-size: 13px; }
+    .results-sort { justify-content: space-between; }
+    .results-sort select { flex: 1; }
+
+    .active-filters { margin-bottom: 14px; }
+
+    .job-card { flex-direction: column; margin-bottom: 14px; border-radius: 14px; }
+    .job-main { padding: 16px 18px; }
+    .job-header { gap: 8px; }
+    .company-logo { width: 40px; height: 40px; font-size: 16px; }
+    .job-info h3 { font-size: 14.5px; }
+    .job-meta { gap: 10px 14px; margin-bottom: 12px; }
+    .job-tags { gap: 6px; }
+
     .job-stub {
-      width: 100%; flex-direction: row; justify-content: space-between;
-      border-left: none; border-top: 2px dashed #e2ddd0; padding: 14px 20px;
+      width: 100%; flex-direction: row; justify-content: space-between; align-items: center;
+      border-left: none; border-top: 2px dashed #e2ddd0; padding: 14px 18px;
     }
     .job-stub::before, .job-stub::after { left: -9px; top: -9px; bottom: auto; }
     .job-stub::after { left: auto; right: -9px; }
+    .job-stub .btn { padding: 9px 16px; }
+
+    .pagination { gap: 6px; margin-top: 24px; flex-wrap: wrap; }
+    .pagination a, .pagination span { width: 34px; height: 34px; font-size: 12px; }
+
+    .empty-results { padding: 44px 18px; }
 
     .footer-content { grid-template-columns: 1fr; gap: 28px; text-align: left; }
+    footer { padding-top: 40px; }
+  }
+
+  @media (max-width: 480px) {
+    .container { padding: 0 14px; }
+
+    .logo { font-size: 17px; }
+    .logo i { width: 32px; height: 32px; font-size: 14px; }
+
+    .jobs-hero h1 { font-size: 19px; }
+    .jobs-hero .eyebrow { flex-wrap: wrap; }
+
+    .filter-panel { padding: 18px; width: 280px; }
+
+    .results-header { gap: 8px; }
+    .results-sort { font-size: 12px; flex-wrap: wrap; }
+
+    .job-stub { flex-wrap: wrap; gap: 8px; }
+    .job-stub .posted-time { order: 3; width: 100%; text-align: center; }
+
+    .job-meta { gap: 8px 12px; }
+    .meta-item { font-size: 11.5px; }
+    .tag { font-size: 10.5px; padding: 4px 9px; }
+
+    .pagination a, .pagination span { width: 30px; height: 30px; font-size: 11.5px; }
   }
 </style>
 </head>
@@ -478,97 +531,7 @@
       </div>
     </div>
     @empty
-    <div class="job-card">
-      <div class="job-main">
-        <div class="job-header">
-          <div class="job-header-left">
-            <div class="company-logo"><i class="fas fa-code"></i></div>
-            <div class="job-info"><h3>Senior Laravel Developer</h3><p class="company-name">TechCorp Solutions</p></div>
-          </div>
-          <div class="save-icon-btn"><i class="fas fa-bookmark"></i></div>
-        </div>
-        <div class="job-meta">
-          <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Dhaka, Bangladesh</span>
-          <span class="meta-item"><i class="fas fa-clock"></i>Full Time</span>
-          <span class="meta-item"><i class="fas fa-briefcase"></i>Senior</span>
-        </div>
-        <div class="job-tags"><span class="tag new">New</span><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">API</span></div>
-      </div>
-      <div class="job-stub">
-        <span class="salary">৳60K-90K</span>
-        <span class="posted-time">2 days ago</span>
-        <a href="#" class="btn btn-outline-dark">Apply</a>
-      </div>
-    </div>
-
-    <div class="job-card">
-      <div class="job-main">
-        <div class="job-header">
-          <div class="job-header-left">
-            <div class="company-logo"><i class="fas fa-bullhorn"></i></div>
-            <div class="job-info"><h3>Digital Marketing Executive</h3><p class="company-name">Global Finance Corp</p></div>
-          </div>
-          <div class="save-icon-btn"><i class="fas fa-bookmark"></i></div>
-        </div>
-        <div class="job-meta">
-          <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Chattogram, Bangladesh</span>
-          <span class="meta-item"><i class="fas fa-clock"></i>Full Time</span>
-          <span class="meta-item"><i class="fas fa-briefcase"></i>Mid-level</span>
-        </div>
-        <div class="job-tags"><span class="tag">SEO</span><span class="tag">Ads</span><span class="tag">Content</span></div>
-      </div>
-      <div class="job-stub">
-        <span class="salary">৳35K-50K</span>
-        <span class="posted-time">5 days ago</span>
-        <a href="#" class="btn btn-outline-dark">Apply</a>
-      </div>
-    </div>
-
-    <div class="job-card">
-      <div class="job-main">
-        <div class="job-header">
-          <div class="job-header-left">
-            <div class="company-logo"><i class="fas fa-paint-brush"></i></div>
-            <div class="job-info"><h3>Product Designer</h3><p class="company-name">HealthCare Plus</p></div>
-          </div>
-          <div class="save-icon-btn"><i class="fas fa-bookmark"></i></div>
-        </div>
-        <div class="job-meta">
-          <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Remote</span>
-          <span class="meta-item"><i class="fas fa-clock"></i>Contract</span>
-          <span class="meta-item"><i class="fas fa-briefcase"></i>Mid-level</span>
-        </div>
-        <div class="job-tags"><span class="tag new">New</span><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
-      </div>
-      <div class="job-stub">
-        <span class="salary">৳45K-70K</span>
-        <span class="posted-time">1 week ago</span>
-        <a href="#" class="btn btn-outline-dark">Apply</a>
-      </div>
-    </div>
-
-    <div class="job-card">
-      <div class="job-main">
-        <div class="job-header">
-          <div class="job-header-left">
-            <div class="company-logo"><i class="fas fa-chart-line"></i></div>
-            <div class="job-info"><h3>Financial Analyst</h3><p class="company-name">EduLearn Platform</p></div>
-          </div>
-          <div class="save-icon-btn"><i class="fas fa-bookmark"></i></div>
-        </div>
-        <div class="job-meta">
-          <span class="meta-item"><i class="fas fa-map-marker-alt"></i>Sylhet, Bangladesh</span>
-          <span class="meta-item"><i class="fas fa-clock"></i>Part Time</span>
-          <span class="meta-item"><i class="fas fa-briefcase"></i>Entry-level</span>
-        </div>
-        <div class="job-tags"><span class="tag">Excel</span><span class="tag">Reporting</span></div>
-      </div>
-      <div class="job-stub">
-        <span class="salary">৳30K-40K</span>
-        <span class="posted-time">2 weeks ago</span>
-        <a href="#" class="btn btn-outline-dark">Apply</a>
-      </div>
-    </div>
+  
     @endforelse
 
     @if (($jobs ?? null) && method_exists($jobs, 'links'))
