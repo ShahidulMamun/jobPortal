@@ -1,18 +1,30 @@
-# Laravel Job Portal
+LivejobsBD
 
-A production-ready job marketplace built with Laravel.
+A modern job portal platform for the Bangladesh job market, built with Laravel. LivejobsBD connects job seekers (candidates) with employers through a clean, fast, and mobile-friendly experience.
+
+ Features
+
+For Candidates
+Browse and search jobs with advanced filters (job type, category, experience level, salary range, division)
+Detailed job pages with description, responsibilities, requirements, benefits, and required skills
+Candidate dashboard with application tracking, saved jobs, job alerts, and profile strength meter
+Editable profile with work experience, education, skills, resume upload, and social/portfolio links
+Bookmark/save jobs for later
+For Employers
+Separate employer registration and login flow
+Post jobs and manage applications (planned/in progress)
+Employer dashboard (planned/in progress)
 Live Demo https://livejobsbd.com/
-## Features
 
-- User authentication
-- Employer dashboard
-- Candidate dashboard
-- Job posting
-- Job applications
-- Admin panel
-- Role-based authorization
-- Notifications
-- Search & filtering
+For Employers
+Separate employer registration and login flow
+Post jobs and manage applications (planned/in progress)
+Employer dashboard (planned/in progress)
+Platform-wide
+Role-based registration (Candidate / Employer) via a single unified signup flow
+Math CAPTCHA (session-based, backend-verified) to prevent bot registrations
+Fully responsive design — works cleanly from small phones up through desktop
+Consistent design system across all pages (see below)
 
 ## Tech Stack
 
@@ -22,6 +34,8 @@ MySQL
 Blade
 JavaScript
 Bootstrap
+
+
 
 
 ## Screenshots
@@ -37,6 +51,3 @@ Bootstrap
 
 ## Architecture
 
-...
-
-## License
